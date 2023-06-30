@@ -1,0 +1,172 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  color: white;
+}
+button {
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 20px;
+  font-size: 1rem;
+}
+button:hover {
+  filter: brightness(1.2);
+}
+body {
+  width: 100%;
+  height: 100vh;
+  background-color: #d9f0ff;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: auto 6fr;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main"
+    "sidebar footer";
+}
+
+header {
+  background-color: #313b72;
+  text-align: center;
+  padding: 2rem;
+  grid-area: header;
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+
+  box-shadow: 4px 3px 5px black;
+  color: white;
+}
+/* sidebar */
+.sideBar {
+  width: 20vw;
+  padding: 10% 15%;
+  text-align: center;
+  background-color: #e6af2e;
+  grid-area: sidebar;
+  box-shadow: 1px 2px 20px black;
+  display: grid;
+  align-content: start;
+  align-items: center;
+  gap: 1rem;
+}
+.sideBar h1 {
+  margin-bottom: 3rem;
+}
+.sideBar .sidBarBtn {
+  padding: 10% 0;
+}
+.onGoingProjects {
+  background-color: rgb(69, 209, 90);
+}
+.finishedProjects {
+  background-color: #d7263d;
+}
+
+/* main */
+main {
+  grid-area: main;
+  padding: 3%;
+
+  overflow: scroll;
+}
+.aboutProjects {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem 0 5rem;
+  align-items: center;
+}
+.aboutProjects #search {
+  padding: 0.8rem 2rem;
+  width: 25vw;
+  border-radius: 30px;
+  border: none;
+  font-size: 1rem;
+}
+.aboutProjects #search:focus {
+  border: none;
+  outline: 2px solid #233cca;
+}
+.num-clear-create-Projects {
+  display: flex;
+  gap: 2rem;
+}
+.num-clear-create-Projects .create {
+  background-color: #e6af2e;
+  font-size: 1rem;
+}
+.num-clear-create-Projects .clear {
+  background-color: #d7263d;
+  font-size: 1rem;
+}
+.projects {
+  display: grid;
+  gap: 3rem;
+}
+.projectCard {
+  padding: 1.5rem 2rem;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.projectInfo {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.projectInfo .projectDescription {
+  width: 30rem;
+}
+.optionBtns {
+  display: flex;
+  gap: 2rem;
+  align-self: end;
+}
+.optionBtns .modify {
+  font-size: 1.1rem;
+}
+.optionBtns .modify {
+  background-color: rgb(168, 191, 216);
+}
+.optionBtns .intoTasks {
+  font-size: 1.1rem;
+  background-color: rgb(63, 192, 82);
+}
+.optionBtns .delete {
+  font-size: 1rem;
+  background-color: #d7263d;
+}
+.high {
+  color: #d7263d;
+}
+.med {
+  color: rgb(255, 187, 0);
+}
+.low {
+  color: rgb(118, 160, 250);
+}
+.notes h3 {
+  margin: 0 0 1rem;
+}
+.notes ul {
+  display: grid;
+  gap: 1rem;
+}
+
+footer {
+  background-color: #313b72;
+  grid-area: footer;
+  color: #d9f0ff;
+  font-size: 1.2rem;
+  padding: 1.5%;
+  text-align: center;
+  border-top-right-radius: 14px;
+  border-top-left-radius: 14px;
+  box-shadow: 1px 2px 20px black;
+}
