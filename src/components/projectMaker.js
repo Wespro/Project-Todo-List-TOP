@@ -4,13 +4,14 @@ import { compareAsc, format } from "date-fns";
 // format(new Date(2014, 1, 11), "yyyy-MM-dd";
 
 export default class Project {
-  constructor(title, description, date, priority) {
+  constructor(title, dueDate, priority, description, projectKey) {
     this.title = title;
-    this.description = description;
-    this.duedate = date;
+    this.dueDate = dueDate;
     this.priority = priority;
+    this.description = description;
+    this.projectKey = projectKey;
     this.notes = [];
-    this.done = true;
+    this.done = false;
   }
 
   addNotes(note) {
