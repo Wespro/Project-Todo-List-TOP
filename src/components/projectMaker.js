@@ -11,7 +11,7 @@ export default class Project {
     this.description = description;
     this.projectKey = projectKey;
     this.notes = [];
-    this.done = false;
+    this.done = true;
   }
 
   addNotes(note) {

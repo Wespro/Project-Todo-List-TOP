@@ -174,6 +174,25 @@ export default (function ProjectManipulation() {
     }
   };
 
+  //highlight the curnt project been clicked
+  const projectHighlight = () => {
+    const projectsNodeList = document.querySelectorAll(".projectCard");
+    const projectSelectedName = document.querySelector(".projectSelectedName");
+
+    projectsNodeList.forEach((project) => {
+      project.addEventListener("click", (e) => {
+        projectsNodeList.forEach((project) => {
+          project.classList.remove("projectSelected");
+        });
+
+        project.classList.toggle("projectSelected");
+        projectSelectedName.innerText = `Project: ${
+          ProjectsStorage.projects[project.dataset.number].title
+        }`;
+      });
+    });
+  };
+
   //add number of projects
   const addProjectsNum = () => {
     const projectCards = document.querySelectorAll(".projectCard");
@@ -204,29 +223,34 @@ export default (function ProjectManipulation() {
     addProjects(projectsSearchedFor);
   };
 
-  //highlight the curnt project been clicked
-  const projectHighlight = () => {
-    const projectsNodeList = document.querySelectorAll(".projectCard");
-    const projectSelectedName = document.querySelector(".projectSelectedName");
+  //Clear Finished Projects
+  const clearFinishedProjects = () => {
+    const keysOffinishedProjects = [];
 
-    projectsNodeList.forEach((project) => {
-      project.addEventListener("click", (e) => {
-        projectsNodeList.forEach((project) => {
-          project.classList.remove("projectSelected");
-        });
-
-        project.classList.toggle("projectSelected");
-        projectSelectedName.innerText = `Project: ${
-          ProjectsStorage.projects[project.dataset.number].title
-        }`;
-      });
+    const finishedProjects = ProjectsStorage.projects.filter((project) => {
+      return project.done;
     });
-  };
 
+    finishedProjects.forEach((project) => {
+      keysOffinishedProjects.push(project.projectKey);
+    });
+
+    // manual delettion of the first one normaly
+    // so that we can use -1 as the index change every time we delete
+    // from the ProjectsStorage.projects
+    ProjectsStorage.projects.splice(keysOffinishedProjects[0], 1);
+
+    keysOffinishedProjects.forEach((index) => {
+      ProjectsStorage.projects.splice(index - 1, 1);
+    });
+    //update the projects Dislpay
+    addProjects();
+  };
   return {
     addProjects,
     addProjectsNum,
     searchBarFunciton,
     projectHighlight,
+    clearFinishedProjects,
   };
 })();

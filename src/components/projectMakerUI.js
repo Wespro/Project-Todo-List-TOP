@@ -6,7 +6,7 @@ import ProjectControlSideBar from "./projectControlSideBar";
 export default function createProjectUI() {
   // golbar vars
   const searchBar = document.getElementById("search");
-  const clearBtn = document.querySelector(".clear");
+  const clearFinishedProjectsBtn = document.querySelector(".clear");
   const createBtn = document.querySelector(".create");
 
   const allProjects = document.querySelector(".allProjects");
@@ -28,6 +28,10 @@ export default function createProjectUI() {
   ProjectControlMain.addProjectsNum();
   searchBar.addEventListener("input", () => {
     ProjectControlMain.searchBarFunciton();
+    ProjectControlMain.addProjectsNum();
+  });
+  clearFinishedProjectsBtn.addEventListener("click", () => {
+    ProjectControlMain.clearFinishedProjects();
     ProjectControlMain.addProjectsNum();
   });
 

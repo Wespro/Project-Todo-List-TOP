@@ -130,6 +130,7 @@ export default (function form() {
         descriptionTextArea.value,
         ProjectsStorage.projects.length
       );
+
       //reset form
       titleInput.value = "";
       dueDateInput.value = "";
