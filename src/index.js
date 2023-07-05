@@ -1,8 +1,8 @@
 import "./css/styles.css";
 //components
 
-import CreateProjectUI from "./components/projectMakerUI";
+import ProjecstUI from "./components/projectMakerUI";
 
 (function toDoList() {
-  CreateProjectUI();
+  ProjecstUI();
 })();

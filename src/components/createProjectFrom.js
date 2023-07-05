@@ -77,7 +77,7 @@ export default (function form() {
     dueDatelable.innerText = "Due-Date: ";
     prioritylable.innerText = "Priority: ";
     prioritySelect1.innerText = "High";
-    prioritySelect2.innerText = "Miduem";
+    prioritySelect2.innerText = "Midium";
     prioritySelect3.innerText = "Low";
     descriptionlable.innerText = "Description: ";
 
