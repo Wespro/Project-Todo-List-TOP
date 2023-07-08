@@ -11,14 +11,6 @@ export default class Project {
     this.description = description;
     this.projectKey = projectKey;
     this.notes = [];
-    this.done = true;
-  }
-
-  addNotes(note) {
-    this.notes.push(note);
-    console.log();
-  }
-  projectDone() {
-    this.done = !this.done;
+    this.done = false;
   }
 }

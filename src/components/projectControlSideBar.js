@@ -1,5 +1,6 @@
 import ProjectControlMain from "./projectControlMain";
 import ProjectsStorage from "./projectsStorage";
+import ProjectCardControl from "./projectCardControl";
 export default (function () {
   //  Finished projects
   const finishedProjectsDisplay = () => {
@@ -8,6 +9,7 @@ export default (function () {
     });
 
     ProjectControlMain.addProjects(undefined, finishedProjects, undefined);
+    ProjectControlMain.addProjectsNum();
   };
 
   // onGoing Projects
@@ -17,6 +19,7 @@ export default (function () {
     });
 
     ProjectControlMain.addProjects(undefined, undefined, onGoingProjects);
+    ProjectControlMain.addProjectsNum();
   };
 
   //  High priorty projects
@@ -31,6 +34,7 @@ export default (function () {
       undefined,
       highPriortyProjects
     );
+    ProjectControlMain.addProjectsNum();
   };
 
   //Medium priorty projects
@@ -46,6 +50,7 @@ export default (function () {
       undefined,
       medPriortyProjects
     );
+    ProjectControlMain.addProjectsNum();
   };
   //       //Low priorty projects
 
@@ -62,6 +67,7 @@ export default (function () {
       undefined,
       lowPriortyProjects
     );
+    ProjectControlMain.addProjectsNum();
   };
 
   return {

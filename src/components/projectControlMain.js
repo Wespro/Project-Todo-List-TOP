@@ -38,6 +38,11 @@ export default (function ProjectManipulation() {
 
       projectCard.setAttribute("data-number", `${index}`);
 
+      if (element.done) {
+        console.log(element.done);
+        projectCard.classList.add("finishedProject");
+      }
+
       projectInfo.classList.add("projectInfo");
       projectTitle.classList.add("projectTitle");
       projectDescription.classList.add("projectDescription");
@@ -185,7 +190,7 @@ export default (function ProjectManipulation() {
           project.classList.remove("projectSelected");
         });
 
-        project.classList.toggle("projectSelected");
+        project.classList.add("projectSelected");
         projectSelectedName.innerText = `Project: ${
           ProjectsStorage.projects[project.dataset.number].title
         }`;
@@ -221,10 +226,12 @@ export default (function ProjectManipulation() {
     });
 
     addProjects(projectsSearchedFor);
+    addProjectsNum();
   };
 
   //Clear Finished Projects
   const clearFinishedProjects = () => {
+    const allProjectKeys = [];
     const keysOffinishedProjects = [];
 
     const finishedProjects = ProjectsStorage.projects.filter((project) => {
@@ -235,17 +242,37 @@ export default (function ProjectManipulation() {
       keysOffinishedProjects.push(project.projectKey);
     });
 
-    // manual delettion of the first one normaly
-    // so that we can use -1 as the index change every time we delete
-    // from the ProjectsStorage.projects
-    ProjectsStorage.projects.splice(keysOffinishedProjects[0], 1);
-
-    keysOffinishedProjects.forEach((index) => {
-      ProjectsStorage.projects.splice(index - 1, 1);
+    ProjectsStorage.projects.forEach((project) => {
+      allProjectKeys.push(project.projectKey);
     });
+
+    allProjectKeys.forEach((projectKey) => {
+      keysOffinishedProjects.forEach((finishedProjectKey) => {
+        if (projectKey === finishedProjectKey) {
+          delete ProjectsStorage.projects[projectKey];
+        }
+      });
+    });
+
+    //removing the empty cells in the storge
+    for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
+      if (ProjectsStorage.projects[i] == null) {
+        ProjectsStorage.projects.splice(i, 1);
+      }
+      //reremoving the empty cells in the storge for any leftovers
+      //because index change everytime you remove from array
+      for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
+        if (ProjectsStorage.projects[i] == null) {
+          ProjectsStorage.projects.splice(i, 1);
+        }
+      }
+    }
+
     //update the projects Dislpay
     addProjects();
+    addProjectsNum();
   };
+
   return {
     addProjects,
     addProjectsNum,
