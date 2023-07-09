@@ -39,7 +39,6 @@ export default (function ProjectManipulation() {
       projectCard.setAttribute("data-number", `${index}`);
 
       if (element.done) {
-        console.log(element.done);
         projectCard.classList.add("finishedProject");
       }
 
@@ -192,7 +191,10 @@ export default (function ProjectManipulation() {
 
         project.classList.add("projectSelected");
         projectSelectedName.innerText = `Project: ${
-          ProjectsStorage.projects[project.dataset.number].title
+          //check that there is project in projects storage to fix error when there is none
+          ProjectsStorage.projects[project.dataset.number]
+            ? ProjectsStorage.projects[project.dataset.number].title
+            : "nothingToWrite"
         }`;
       });
     });
@@ -252,25 +254,25 @@ export default (function ProjectManipulation() {
           delete ProjectsStorage.projects[projectKey];
         }
       });
-    });
 
-    //removing the empty cells in the storge
-    for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
-      if (ProjectsStorage.projects[i] == null) {
-        ProjectsStorage.projects.splice(i, 1);
-      }
-      //reremoving the empty cells in the storge for any leftovers
-      //because index change everytime you remove from array
+      //removing the empty cells in the storge
       for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
         if (ProjectsStorage.projects[i] == null) {
           ProjectsStorage.projects.splice(i, 1);
         }
+        //reremoving the empty cells in the storge for any leftovers
+        //because index change everytime you remove from array
+        for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
+          if (ProjectsStorage.projects[i] == null) {
+            ProjectsStorage.projects.splice(i, 1);
+          }
+        }
       }
-    }
 
-    //update the projects Dislpay
-    addProjects();
-    addProjectsNum();
+      //update the projects Dislpay
+      addProjects();
+      addProjectsNum();
+    });
   };
 
   return {

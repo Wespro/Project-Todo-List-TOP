@@ -26,28 +26,20 @@ export default function createProjectUI() {
 
   searchBar.addEventListener("input", () => {
     ProjectControlMain.searchBarFunciton();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
   clearFinishedProjectsBtn.addEventListener("click", () => {
     ProjectControlMain.clearFinishedProjects();
-    projectDoneBtnsEventListener();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
-  // project card vars
-  const modifyBtns = document.querySelectorAll(".modify");
-  const addNotesBtns = document.querySelectorAll(".addNotes");
-  const intoTasksBtn = document.querySelectorAll(".intoTasks");
-  const deleteProjectBtns = document.querySelectorAll(".delete");
 
-  const projectDoneBtnsEventListener = (onGoing) => {
-    const projectDoneBtns = document.querySelectorAll(".projectDone");
-    projectDoneBtns.forEach((btn) => {
-      btn.addEventListener("click", function (e) {
-        ProjectCardControl.projectDone(e.target.dataset.number, onGoing);
-      });
-    });
-    ProjectControlMain.projectHighlight();
-  };
-  projectDoneBtnsEventListener();
+  //card btns intial asssiment of event listner
+  ProjectCardControl.projectDoneBtnsEventListener();
+  ProjectCardControl.deleteProjectBtnsEventListener();
+
   //sidebar vars
   const allProjects = document.querySelector(".allProjects");
   const onGoingProjects = document.querySelector(".onGoingProjects");
@@ -60,27 +52,36 @@ export default function createProjectUI() {
   //sidebar control
   allProjects.addEventListener("click", () => {
     ProjectControlMain.addProjects();
-    projectDoneBtnsEventListener();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectControlMain.addProjectsNum();
   });
   onGoingProjects.addEventListener("click", () => {
     ProjectControlSideBar.onGoingProjectsDisplay();
-    projectDoneBtnsEventListener("onGoing");
+    ProjectCardControl.projectDoneBtnsEventListener("onGoing");
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
   finishedProjects.addEventListener("click", () => {
     ProjectControlSideBar.finishedProjectsDisplay();
-    projectDoneBtnsEventListener();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
   highPriortyProjects.addEventListener("click", () => {
     ProjectControlSideBar.highPriortyProjectsDisplay();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
   medPriortyProjects.addEventListener("click", () => {
     ProjectControlSideBar.medPriortyProjectsDisplay();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
   lowPriortyProjects.addEventListener("click", () => {
     ProjectControlSideBar.lowPriortyProjectsDisplay();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
   //Form Manipulation
@@ -94,6 +95,7 @@ export default function createProjectUI() {
     ProjectControlMain.addProjects();
     ProjectControlMain.projectHighlight();
     ProjectControlMain.addProjectsNum();
-    projectDoneBtnsEventListener();
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 }
