@@ -4,37 +4,84 @@ import ProjectCardControl from "./projectCardControl";
 export default (function () {
   //  Finished projects
   const finishedProjectsDisplay = () => {
-    const finishedProjects = ProjectsStorage.projects.filter((project) => {
-      return project.done;
+    const allProjectCardsNodes = document.querySelectorAll(".projectCard");
+    allProjectCardsNodes.forEach((node) => {
+      node.style.display = "none";
     });
 
-    ProjectControlMain.addProjects(undefined, finishedProjects, undefined);
-    ProjectControlMain.addProjectsNum();
+    const finishedProjectCards = [];
+
+    allProjectCardsNodes.forEach((node) => {
+      node.classList.contains("finishedProject")
+        ? finishedProjectCards.push(node)
+        : "return";
+    });
+    finishedProjectCards.forEach((node) => {
+      node.style.display = "flex";
+    });
+
+    ProjectControlMain.addProjectsNum(finishedProjectCards.length);
+    // const finishedProjects = ProjectsStorage.projects.filter((project) => {
+    //   return project.done;
+    // });
+
+    // ProjectControlMain.addProjects(undefined, finishedProjects, undefined);
   };
 
   // onGoing Projects
   const onGoingProjectsDisplay = () => {
-    const onGoingProjects = ProjectsStorage.projects.filter((project) => {
-      return !project.done;
+    const allProjectCardsNodes = document.querySelectorAll(".projectCard");
+    allProjectCardsNodes.forEach((node) => {
+      node.style.display = "none";
     });
 
-    ProjectControlMain.addProjects(undefined, undefined, onGoingProjects);
-    ProjectControlMain.addProjectsNum();
+    const onGoingProjectCards = [];
+
+    allProjectCardsNodes.forEach((node) => {
+      !node.classList.contains("finishedProject")
+        ? onGoingProjectCards.push(node)
+        : "return";
+    });
+    onGoingProjectCards.forEach((node) => {
+      node.style.display = "flex";
+    });
+    ProjectControlMain.addProjectsNum(onGoingProjectCards.length);
+    // const onGoingProjects = ProjectsStorage.projects.filter((project) => {
+    //   return !project.done;
+    // });
+
+    // ProjectControlMain.addProjects(undefined, undefined, onGoingProjects);
   };
 
   //  High priorty projects
   const highPriortyProjectsDisplay = () => {
-    const highPriortyProjects = ProjectsStorage.projects.filter((project) => {
-      return project.priority === "High";
+    const allProjectCardsNodes = document.querySelectorAll(".projectCard");
+    allProjectCardsNodes.forEach((node) => {
+      node.style.display = "none";
     });
 
-    ProjectControlMain.addProjects(
-      undefined,
-      undefined,
-      undefined,
-      highPriortyProjects
-    );
-    ProjectControlMain.addProjectsNum();
+    const highPriortyProjectCards = [];
+
+    allProjectCardsNodes.forEach((node) => {
+      !node.classList.contains("finishedProject")
+        ? highPriortyProjectCards.push(node)
+        : "return";
+    });
+    highPriortyProjectCards.forEach((node) => {
+      node.style.display = "flex";
+    });
+    ProjectControlMain.addProjectsNum(highPriortyProjectCards.length);
+
+    // const highPriortyProjects = ProjectsStorage.projects.filter((project) => {
+    //   return project.priority === "High";
+    // });
+    // ProjectControlMain.addProjects(
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   highPriortyProjects
+    // );
+    // ProjectControlMain.addProjectsNum();
   };
 
   //Medium priorty projects

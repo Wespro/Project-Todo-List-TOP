@@ -34,7 +34,11 @@ export default (function ProjectManipulation() {
 
       // assign attrs
 
-      projectCard.classList.add("projectCard");
+      projectCard.classList.add(
+        "projectCard",
+        element.priority.toLowerCase(),
+        element.done
+      );
 
       projectCard.setAttribute("data-number", `${index}`);
 
@@ -201,20 +205,20 @@ export default (function ProjectManipulation() {
   };
 
   //add number of projects
-  const addProjectsNum = () => {
+  const addProjectsNum = (projectsNum) => {
     const projectCards = document.querySelectorAll(".projectCard");
     const projectNum = document.querySelector(".projectNum");
 
-    switch (projectCards.length) {
+    switch (projectsNum) {
       case 0:
-        projectNum.innerText = `${projectCards.length} Projects`;
+        projectNum.innerText = `${projectsNum} Projects`;
         break;
       case 1:
-        projectNum.innerText = `${projectCards.length} Project`;
+        projectNum.innerText = `${projectsNum} Project`;
 
         break;
       default:
-        projectNum.innerText = `${projectCards.length} Projects`;
+        projectNum.innerText = `${projectsNum} Projects`;
     }
   };
 

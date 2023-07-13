@@ -1,5 +1,4 @@
 import CreateProjectForm from "./createProjectFrom";
-
 import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
 import ProjectCardControl from "./projectCardControl";
@@ -22,7 +21,10 @@ export default function createProjectUI() {
   //main control
   ProjectControlMain.addProjects();
   ProjectControlMain.projectHighlight();
-  ProjectControlMain.addProjectsNum();
+  // important to put this here after addprojects
+  const allProjectCardsNodes = document.querySelectorAll(".projectCard");
+
+  ProjectControlMain.addProjectsNum(allProjectCardsNodes.length);
 
   searchBar.addEventListener("input", () => {
     ProjectControlMain.searchBarFunciton();
@@ -54,34 +56,34 @@ export default function createProjectUI() {
     ProjectControlMain.addProjects();
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
-    ProjectControlMain.addProjectsNum();
+    ProjectControlMain.addProjectsNum(allProjectCardsNodes.length);
   });
-  onGoingProjects.addEventListener("click", () => {
+  onGoingProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.onGoingProjectsDisplay();
-    ProjectCardControl.projectDoneBtnsEventListener("onGoing");
-    ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.projectDoneSwitchWord("onGoing");
+    ProjectCardControl.deleteProjectBtnsEventListener("finish");
   });
-  finishedProjects.addEventListener("click", () => {
+  finishedProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.finishedProjectsDisplay();
-    ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.projectDoneSwitchWord(undefined, "finish");
+    ProjectCardControl.deleteProjectBtnsEventListener("finish");
   });
 
   highPriortyProjects.addEventListener("click", () => {
     ProjectControlSideBar.highPriortyProjectsDisplay();
     ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener("high");
   });
   medPriortyProjects.addEventListener("click", () => {
     ProjectControlSideBar.medPriortyProjectsDisplay();
     ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener("med");
   });
 
-  lowPriortyProjects.addEventListener("click", () => {
+  lowPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.lowPriortyProjectsDisplay();
     ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener("low");
   });
 
   //Form Manipulation

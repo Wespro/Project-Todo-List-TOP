@@ -1,6 +1,7 @@
 import ProjectMaker from "./projectMaker";
 export default (function ProjectsStorage() {
   const projects = [];
+  //default project
   const createTestProject = () => {
     const testProject = new ProjectMaker(
       "Test",
