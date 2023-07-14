@@ -14,7 +14,7 @@ export default (function ProjectManipulation() {
     lowPriortyProjects
   ) => {
     projectsContainer.replaceChildren();
-
+    clearEmptyCellsInArray();
     const addingProjects = (element, index) => {
       const projectCard = document.createElement("div");
 
@@ -100,86 +100,10 @@ export default (function ProjectManipulation() {
       );
       projectsContainer.append(fragment);
     };
-    /////////////////////////////////////////
-    //deciding display of projects
-    if (
-      !projectsSearchedFor &&
-      !finishedProjects &&
-      !onGoingProjects &&
-      !highPriortyProjects &&
-      !medPriortyProjects &&
-      !lowPriortyProjects
-    ) {
-      ProjectsStorage.projects.forEach((project, index) => {
-        addingProjects(project, index);
-      });
-    } else if (
-      projectsSearchedFor &&
-      !finishedProjects &&
-      !onGoingProjects &&
-      !highPriortyProjects &&
-      !medPriortyProjects &&
-      !lowPriortyProjects
-    ) {
-      projectsSearchedFor.forEach((project, index) => {
-        addingProjects(project, index);
-      });
-    } else if (
-      !projectsSearchedFor &&
-      finishedProjects &&
-      !onGoingProjects &&
-      !highPriortyProjects &&
-      !medPriortyProjects &&
-      !lowPriortyProjects
-    ) {
-      finishedProjects.forEach((project, index) => {
-        addingProjects(project, index);
-      });
-    } else if (
-      !projectsSearchedFor &&
-      !finishedProjects &&
-      onGoingProjects &&
-      !highPriortyProjects &&
-      !medPriortyProjects &&
-      !lowPriortyProjects
-    ) {
-      onGoingProjects.forEach((project, index) => {
-        addingProjects(project, index);
-      });
-    } else if (
-      !projectsSearchedFor &&
-      !finishedProjects &&
-      !onGoingProjects &&
-      highPriortyProjects &&
-      !medPriortyProjects &&
-      !lowPriortyProjects
-    ) {
-      highPriortyProjects.forEach((project, index) => {
-        addingProjects(project, index);
-      });
-    } else if (
-      !projectsSearchedFor &&
-      !finishedProjects &&
-      !onGoingProjects &&
-      !highPriortyProjects &&
-      medPriortyProjects &&
-      !lowPriortyProjects
-    ) {
-      medPriortyProjects.forEach((project, index) => {
-        addingProjects(project, index);
-      });
-    } else if (
-      !projectsSearchedFor &&
-      !finishedProjects &&
-      !onGoingProjects &&
-      !highPriortyProjects &&
-      !medPriortyProjects &&
-      lowPriortyProjects
-    ) {
-      lowPriortyProjects.forEach((project, index) => {
-        addingProjects(project, index);
-      });
-    }
+
+    ProjectsStorage.projects.forEach((project, index) => {
+      addingProjects(project, index);
+    });
   };
 
   //highlight the curnt project been clicked
@@ -194,11 +118,13 @@ export default (function ProjectManipulation() {
         });
 
         project.classList.add("projectSelected");
-        projectSelectedName.innerText = `Project: ${
+        projectSelectedName.innerText = ` ${
           //check that there is project in projects storage to fix error when there is none
           ProjectsStorage.projects[project.dataset.number]
-            ? ProjectsStorage.projects[project.dataset.number].title
-            : "nothingToWrite"
+            ? `Project: ${
+                ProjectsStorage.projects[project.dataset.number].title
+              }`
+            : "Select Project"
         }`;
       });
     });
@@ -251,32 +177,42 @@ export default (function ProjectManipulation() {
     ProjectsStorage.projects.forEach((project) => {
       allProjectKeys.push(project.projectKey);
     });
-
+    //removing the empty cells in the nodelist
     allProjectKeys.forEach((projectKey) => {
       keysOffinishedProjects.forEach((finishedProjectKey) => {
         if (projectKey === finishedProjectKey) {
           delete ProjectsStorage.projects[projectKey];
         }
       });
-
-      //removing the empty cells in the storge
-      for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
-        if (ProjectsStorage.projects[i] == null) {
-          ProjectsStorage.projects.splice(i, 1);
-        }
-        //reremoving the empty cells in the storge for any leftovers
-        //because index change everytime you remove from array
-        for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
-          if (ProjectsStorage.projects[i] == null) {
-            ProjectsStorage.projects.splice(i, 1);
-          }
-        }
-      }
-
-      //update the projects Dislpay
-      addProjects();
-      addProjectsNum();
     });
+    //reremoving the empty cells  in the nodelist because of index chaning
+    allProjectKeys.forEach((projectKey) => {
+      keysOffinishedProjects.forEach((finishedProjectKey) => {
+        if (projectKey === finishedProjectKey) {
+          delete ProjectsStorage.projects[projectKey];
+        }
+      });
+    });
+
+    //update the projects Dislpay
+    addProjects();
+    addProjectsNum(ProjectsStorage.projects.length);
+  };
+
+  const clearEmptyCellsInArray = () => {
+    //removing the empty cells in the storge
+    for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
+      if (ProjectsStorage.projects[i] == null) {
+        ProjectsStorage.projects.splice(i, 1);
+      }
+    }
+    //reremoving the empty cells in the storge because of index chaning
+    for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
+      if (ProjectsStorage.projects[i] == null) {
+        ProjectsStorage.projects.splice(i, 1);
+      }
+    }
+    console.log(ProjectsStorage.projects);
   };
 
   return {

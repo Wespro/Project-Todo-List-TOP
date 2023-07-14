@@ -2,6 +2,7 @@ import CreateProjectForm from "./createProjectFrom";
 import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
 import ProjectCardControl from "./projectCardControl";
+import ProjectsStorage from "./projectsStorage";
 
 export default function createProjectUI() {
   // golbar vars
@@ -61,29 +62,29 @@ export default function createProjectUI() {
   onGoingProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.onGoingProjectsDisplay();
     ProjectCardControl.projectDoneSwitchWord("onGoing");
-    ProjectCardControl.deleteProjectBtnsEventListener("finish");
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
   finishedProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.finishedProjectsDisplay();
     ProjectCardControl.projectDoneSwitchWord(undefined, "finish");
-    ProjectCardControl.deleteProjectBtnsEventListener("finish");
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
   highPriortyProjects.addEventListener("click", () => {
     ProjectControlSideBar.highPriortyProjectsDisplay();
-    ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener("high");
+    ProjectCardControl.projectPrioritySwitch("high");
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
   medPriortyProjects.addEventListener("click", () => {
     ProjectControlSideBar.medPriortyProjectsDisplay();
-    ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener("med");
+    ProjectCardControl.projectPrioritySwitch(undefined, "med");
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
   lowPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.lowPriortyProjectsDisplay();
-    ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener("low");
+    ProjectCardControl.projectPrioritySwitch(undefined, undefined, "low");
+    ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
   //Form Manipulation
@@ -96,7 +97,7 @@ export default function createProjectUI() {
     CreateProjectForm.createProject(e);
     ProjectControlMain.addProjects();
     ProjectControlMain.projectHighlight();
-    ProjectControlMain.addProjectsNum();
+    ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
   });

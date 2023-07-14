@@ -21,11 +21,6 @@ export default (function () {
     });
 
     ProjectControlMain.addProjectsNum(finishedProjectCards.length);
-    // const finishedProjects = ProjectsStorage.projects.filter((project) => {
-    //   return project.done;
-    // });
-
-    // ProjectControlMain.addProjects(undefined, finishedProjects, undefined);
   };
 
   // onGoing Projects
@@ -46,11 +41,6 @@ export default (function () {
       node.style.display = "flex";
     });
     ProjectControlMain.addProjectsNum(onGoingProjectCards.length);
-    // const onGoingProjects = ProjectsStorage.projects.filter((project) => {
-    //   return !project.done;
-    // });
-
-    // ProjectControlMain.addProjects(undefined, undefined, onGoingProjects);
   };
 
   //  High priorty projects
@@ -63,7 +53,7 @@ export default (function () {
     const highPriortyProjectCards = [];
 
     allProjectCardsNodes.forEach((node) => {
-      !node.classList.contains("finishedProject")
+      node.classList.contains("high")
         ? highPriortyProjectCards.push(node)
         : "return";
     });
@@ -71,50 +61,46 @@ export default (function () {
       node.style.display = "flex";
     });
     ProjectControlMain.addProjectsNum(highPriortyProjectCards.length);
-
-    // const highPriortyProjects = ProjectsStorage.projects.filter((project) => {
-    //   return project.priority === "High";
-    // });
-    // ProjectControlMain.addProjects(
-    //   undefined,
-    //   undefined,
-    //   undefined,
-    //   highPriortyProjects
-    // );
-    // ProjectControlMain.addProjectsNum();
   };
 
   //Medium priorty projects
   const medPriortyProjectsDisplay = () => {
-    const medPriortyProjects = ProjectsStorage.projects.filter((project) => {
-      return project.priority === "Medium";
+    const allProjectCardsNodes = document.querySelectorAll(".projectCard");
+    allProjectCardsNodes.forEach((node) => {
+      node.style.display = "none";
     });
 
-    ProjectControlMain.addProjects(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      medPriortyProjects
-    );
-    ProjectControlMain.addProjectsNum();
+    const medPriortyProjectCards = [];
+
+    allProjectCardsNodes.forEach((node) => {
+      node.classList.contains("medium")
+        ? medPriortyProjectCards.push(node)
+        : "return";
+    });
+    medPriortyProjectCards.forEach((node) => {
+      node.style.display = "flex";
+    });
+    ProjectControlMain.addProjectsNum(medPriortyProjectCards.length);
   };
-  //       //Low priorty projects
+  //Low priorty projects
 
   const lowPriortyProjectsDisplay = () => {
-    const lowPriortyProjects = ProjectsStorage.projects.filter((project) => {
-      return project.priority === "Low";
+    const allProjectCardsNodes = document.querySelectorAll(".projectCard");
+    allProjectCardsNodes.forEach((node) => {
+      node.style.display = "none";
     });
 
-    ProjectControlMain.addProjects(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      lowPriortyProjects
-    );
-    ProjectControlMain.addProjectsNum();
+    const lowPriortyProjectCards = [];
+
+    allProjectCardsNodes.forEach((node) => {
+      node.classList.contains("low")
+        ? lowPriortyProjectCards.push(node)
+        : "return";
+    });
+    lowPriortyProjectCards.forEach((node) => {
+      node.style.display = "flex";
+    });
+    ProjectControlMain.addProjectsNum(lowPriortyProjectCards.length);
   };
 
   return {

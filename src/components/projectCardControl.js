@@ -6,6 +6,9 @@ export default (function () {
   //private vars
   let onGoing1 = "";
   let finished1 = "";
+  let isHigh1 = "";
+  let isMed1 = "";
+  let isLow1 = "";
   // project card vars
   const modifyBtns = document.querySelectorAll(".modify");
   const addNotesBtns = document.querySelectorAll(".addNotes");
@@ -76,6 +79,12 @@ export default (function () {
     ProjectControlMain.projectHighlight();
   };
 
+  const projectPrioritySwitch = (isHigh, isMed, isLow) => {
+    isHigh1 = isHigh;
+    isMed1 = isMed;
+    isLow1 = isLow;
+  };
+
   const deleteProject = (projectIndex, projectsType) => {
     ProjectsStorage.projects.forEach((storgeProject, index) => {
       if (Number(projectIndex) === index) {
@@ -87,30 +96,26 @@ export default (function () {
             ProjectsStorage.projects.splice(i, 1);
           }
         }
+
         // update the projects Dislpay
-        switch (projectsType) {
-          case "onGoing":
-            ProjectControlSideBar.onGoingProjectsDisplay();
-            break;
-          case "finish":
-            ProjectControlSideBar.finishedProjectsDisplay();
-            console.log("here");
-            break;
-          case "high":
-            ProjectControlSideBar.highPriortyProjectsDisplay();
-            console.log("here");
-            break;
-          case "med":
-            ProjectControlSideBar.medPriortyProjectsDisplay();
-            console.log("here");
-            break;
-          case "low":
-            ProjectControlSideBar.lowPriortyProjectsDisplay();
-            console.log("low", ProjectsStorage.projects);
-            break;
-          default:
-            ProjectControlMain.addProjects();
-            console.log("here");
+        if (onGoing1) {
+          ProjectControlMain.addProjects();
+          ProjectControlSideBar.onGoingProjectsDisplay();
+        } else if (finished1) {
+          ProjectControlMain.addProjects();
+          ProjectControlSideBar.finishedProjectsDisplay();
+        } else if (isHigh1) {
+          ProjectControlMain.addProjects();
+          ProjectControlSideBar.highPriortyProjectsDisplay();
+        } else if (isMed1) {
+          ProjectControlMain.addProjects();
+          ProjectControlSideBar.medPriortyProjectsDisplay();
+        } else if (isLow1) {
+          ProjectControlMain.addProjects();
+          ProjectControlSideBar.lowPriortyProjectsDisplay();
+        } else {
+          ProjectControlMain.addProjects();
+          ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
         }
       }
     });
@@ -122,7 +127,7 @@ export default (function () {
     deleteProjectBtns.forEach((btn) => {
       btn.addEventListener("click", function (e) {
         deleteProject(btn.dataset.number, projectsType);
-        deleteProjectBtnsEventListener();
+        deleteProjectBtnsEventListener(projectsType);
       });
     });
     ProjectControlMain.projectHighlight();
@@ -138,6 +143,7 @@ export default (function () {
     projectDoneSwitchWord,
     deleteProject,
     deleteProjectBtnsEventListener,
+    projectPrioritySwitch,
     addNotes,
   };
 })();
