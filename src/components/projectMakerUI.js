@@ -3,7 +3,7 @@ import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
 import ProjectCardControl from "./projectCardControl";
 import ProjectsStorage from "./projectsStorage";
-
+import ModifyProjectFrom from "./modifyProjectFrom";
 export default function createProjectUI() {
   // golbar vars
 
@@ -87,7 +87,7 @@ export default function createProjectUI() {
     ProjectCardControl.deleteProjectBtnsEventListener();
   });
 
-  //Form Manipulation
+  //create Form Manipulation
 
   const submitBtn = document.querySelector(".submit");
   const closeIcon = document.querySelector(".closeIcon");
@@ -98,6 +98,21 @@ export default function createProjectUI() {
     ProjectControlMain.addProjects();
     ProjectControlMain.projectHighlight();
     ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
+    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.deleteProjectBtnsEventListener();
+  });
+  //Modify Form Manipulation
+
+  const modifySubmitbtn = document.querySelector(".modifySubmitbtn");
+  const modifyCloseIcon = document.querySelector(".modifyCloseIcon");
+
+  ProjectCardControl.modifyProjectInfoBtnsEventListener();
+
+  modifyCloseIcon.addEventListener("click", CreateProjectForm.closeForm);
+  modifySubmitbtn.addEventListener("click", (e) => {
+    ModifyProjectFrom.modifyProject(e, btn.dataset.number);
+    ProjectControlMain.addProjects();
+    ProjectControlMain.projectHighlight();
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
   });

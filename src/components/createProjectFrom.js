@@ -10,50 +10,55 @@ export default (function form() {
   const fragment = new DocumentFragment();
 
   const body = document.querySelector("body");
+  const dimLightScreen = document.querySelector(".dimLightScreen");
   const form = document.createElement("form");
   const closeIcon = document.createElement("img");
+  const createFormName = document.createElement("h1");
 
   const titleContainer = document.createElement("div");
-  const titlelable = document.createElement("label");
+  const titleLabel = document.createElement("label");
   const titleInput = document.createElement("input");
 
   const dueDateContainer = document.createElement("div");
-  const dueDatelable = document.createElement("label");
+  const dueDateLabel = document.createElement("label");
   const dueDateInput = document.createElement("input");
 
   const priorityContainer = document.createElement("div");
-  const prioritylable = document.createElement("label");
+  const priorityLabel = document.createElement("label");
   const prioritySelect = document.createElement("select");
   const prioritySelect1 = document.createElement("option");
   const prioritySelect2 = document.createElement("option");
   const prioritySelect3 = document.createElement("option");
 
   const descriptionContainer = document.createElement("div");
-  const descriptionlable = document.createElement("label");
+  const descriptionLabel = document.createElement("label");
   const descriptionTextArea = document.createElement("textarea");
 
   const submitbtn = document.createElement("button");
+
+  //methouds
   const theCreateForm = () => {
     //assign attributes
     form.classList.add("closeForm");
     closeIcon.classList.add("closeIcon");
+    createFormName.classList.add("createFormName");
 
     titleContainer.classList.add("titleContainer");
-    titlelable.setAttribute("for", "title");
+    titleLabel.setAttribute("for", "title");
     titleInput.setAttribute("id", "title");
     titleInput.setAttribute("required", "");
     titleInput.setAttribute("name", "title");
     titleInput.setAttribute("type", "text");
 
     dueDateContainer.classList.add("dueDateContainer");
-    dueDatelable.setAttribute("for", "dueDate");
+    dueDateLabel.setAttribute("for", "dueDate");
     dueDateInput.setAttribute("id", "dueDate");
     dueDateInput.setAttribute("required", "");
     dueDateInput.setAttribute("name", "dueDate");
     dueDateInput.setAttribute("type", "date");
 
     priorityContainer.classList.add("priorityContainer");
-    prioritylable.setAttribute("for", "priority");
+    priorityLabel.setAttribute("for", "priority");
     prioritySelect.setAttribute("id", "priority");
     prioritySelect.setAttribute("required", "");
     prioritySelect.setAttribute("name", "priority");
@@ -63,7 +68,7 @@ export default (function form() {
     prioritySelect3.setAttribute("value", "Low");
 
     descriptionContainer.classList.add("descriptionContainer");
-    descriptionlable.setAttribute("for", "description");
+    descriptionLabel.setAttribute("for", "description");
     descriptionTextArea.setAttribute("id", "description");
     descriptionTextArea.setAttribute("required", "");
     descriptionTextArea.setAttribute("name", "description");
@@ -73,13 +78,15 @@ export default (function form() {
     submitbtn.classList.add("submit");
     submitbtn.setAttribute("type", "submit");
     //add text
-    titlelable.innerText = "Title: ";
-    dueDatelable.innerText = "Due-Date: ";
-    prioritylable.innerText = "Priority: ";
+    createFormName.innerText = "Create Project";
+
+    titleLabel.innerText = "Title: ";
+    dueDateLabel.innerText = "Due-Date: ";
+    priorityLabel.innerText = "Priority: ";
     prioritySelect1.innerText = "High";
     prioritySelect2.innerText = "Midium";
     prioritySelect3.innerText = "Low";
-    descriptionlable.innerText = "Description: ";
+    descriptionLabel.innerText = "Description: ";
 
     submitbtn.innerText = "Create";
     //add src for icon and img
@@ -88,29 +95,34 @@ export default (function form() {
     fragment.appendChild(form);
     form.append(
       closeIcon,
+      createFormName,
       titleContainer,
       dueDateContainer,
       priorityContainer,
       descriptionContainer,
       submitbtn
     );
-    titleContainer.append(titlelable, titleInput);
-    dueDateContainer.append(dueDatelable, dueDateInput);
-    priorityContainer.append(prioritylable, prioritySelect);
-    descriptionContainer.append(descriptionlable, descriptionTextArea);
+    titleContainer.append(titleLabel, titleInput);
+    dueDateContainer.append(dueDateLabel, dueDateInput);
+    priorityContainer.append(priorityLabel, prioritySelect);
+    descriptionContainer.append(descriptionLabel, descriptionTextArea);
 
     prioritySelect.append(prioritySelect1, prioritySelect2, prioritySelect3);
 
     body.append(fragment);
   };
-  //methouds
+
   const openForm = () => {
     form.classList.remove("closeForm");
     form.classList.add("openForm");
+    dimLightScreen.classList.add("dimLightScreenOn");
+    dimLightScreen.classList.remove("dimLightScreenOff");
   };
   const closeForm = () => {
     form.classList.remove("openForm");
     form.classList.add("closeForm");
+    dimLightScreen.classList.remove("dimLightScreenOn");
+    dimLightScreen.classList.add("dimLightScreenOff");
   };
 
   const createProject = (e) => {

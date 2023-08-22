@@ -1,6 +1,7 @@
 import ProjectMaker from "./projectMaker";
 export default (function ProjectsStorage() {
   const projects = [];
+  const projectNotes = [];
   //default project
   const createTestProject = () => {
     const testProject = new ProjectMaker(
@@ -13,6 +14,10 @@ export default (function ProjectsStorage() {
 
     projects.push(testProject);
   };
+  //add notes
+  const addNotes = (note) => {
+    projectNotes.push(note);
+  };
   createTestProject();
-  return { projects, createTestProject };
+  return { projects, createTestProject, projectNotes, addNotes };
 })();

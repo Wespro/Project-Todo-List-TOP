@@ -1,6 +1,7 @@
 import ProjectsStorage from "./projectsStorage";
 import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
+import ModifyProjectFrom from "./modifyProjectFrom";
 
 export default (function () {
   //private vars
@@ -137,6 +138,17 @@ export default (function () {
     this.notes.push(note);
   };
 
+  const modifyProjectInfoBtnsEventListener = () => {
+    const modifyProjectInfoBtns = document.querySelectorAll(".modify");
+
+    modifyProjectInfoBtns.forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        ModifyProjectFrom.theModifyForm(e, btn.dataset.number);
+        ModifyProjectFrom.openModifyForm();
+      });
+    });
+    ProjectControlMain.projectHighlight();
+  };
   return {
     projectDone,
     projectDoneBtnsEventListener,
@@ -145,5 +157,6 @@ export default (function () {
     deleteProjectBtnsEventListener,
     projectPrioritySwitch,
     addNotes,
+    modifyProjectInfoBtnsEventListener,
   };
 })();

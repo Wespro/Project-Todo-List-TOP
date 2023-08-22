@@ -29,6 +29,20 @@ body {
     "sidebar footer";
 }
 
+.dimLightScreenOn {
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+}
+.dimLightScreenOff {
+  position: absolute;
+  background-color: grey;
+  display: none;
+  width: 100%;
+  height: 100%;
+}
 header {
   background-color: #313b72;
   text-align: center;
