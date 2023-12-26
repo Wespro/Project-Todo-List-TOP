@@ -6,7 +6,7 @@ export default (function ProjectsStorage() {
   const createTestProject = () => {
     const testProject = new ProjectMaker(
       "Test",
-      "7/15/2023",
+      "2023/7/15",
       "High",
       "Lorem ipsum dolor sit amet consectetur adipisicing elit.Sint dolorum distinctio magni similique libero suscipit!",
       0

@@ -12,5 +12,6 @@ export default class Project {
     this.projectKey = projectKey;
     this.notes = [];
     this.done = false;
+    this.openToBeModified = false;
   }
 }

@@ -14,8 +14,10 @@ export default function createProjectUI() {
   const clearFinishedProjectsBtn = document.querySelector(".clear");
   const createBtn = document.querySelector(".create");
 
-  //add the Create PRoject form
+  //add the Create Project form
   CreateProjectForm.theCreateForm();
+  //add the Modify Project form
+  ModifyProjectFrom.theModifyForm();
 
   //projects control
 
@@ -42,6 +44,7 @@ export default function createProjectUI() {
   //card btns intial asssiment of event listner
   ProjectCardControl.projectDoneBtnsEventListener();
   ProjectCardControl.deleteProjectBtnsEventListener();
+  ProjectCardControl.modifyProjectInfoBtnsEventListener();
 
   //sidebar vars
   const allProjects = document.querySelector(".allProjects");
@@ -86,10 +89,10 @@ export default function createProjectUI() {
     ProjectCardControl.projectPrioritySwitch(undefined, undefined, "low");
     ProjectCardControl.deleteProjectBtnsEventListener();
   });
-
   //create Form Manipulation
 
   const submitBtn = document.querySelector(".submit");
+
   const closeIcon = document.querySelector(".closeIcon");
   createBtn.addEventListener("click", CreateProjectForm.openForm);
   closeIcon.addEventListener("click", CreateProjectForm.closeForm);
@@ -100,20 +103,6 @@ export default function createProjectUI() {
     ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
-  });
-  //Modify Form Manipulation
-
-  const modifySubmitbtn = document.querySelector(".modifySubmitbtn");
-  const modifyCloseIcon = document.querySelector(".modifyCloseIcon");
-
-  ProjectCardControl.modifyProjectInfoBtnsEventListener();
-
-  modifyCloseIcon.addEventListener("click", CreateProjectForm.closeForm);
-  modifySubmitbtn.addEventListener("click", (e) => {
-    ModifyProjectFrom.modifyProject(e, btn.dataset.number);
-    ProjectControlMain.addProjects();
-    ProjectControlMain.projectHighlight();
-    ProjectCardControl.projectDoneBtnsEventListener();
-    ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
   });
 }

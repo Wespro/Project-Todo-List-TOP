@@ -133,22 +133,42 @@ export default (function () {
     });
     ProjectControlMain.projectHighlight();
   };
+  ////////////////////////
 
   const addNotes = (note) => {
     this.notes.push(note);
   };
 
+  ///////////////////////////////
   const modifyProjectInfoBtnsEventListener = () => {
     const modifyProjectInfoBtns = document.querySelectorAll(".modify");
 
+    //open modifyform eventListener
     modifyProjectInfoBtns.forEach((btn) => {
       btn.addEventListener("click", function (e) {
-        ModifyProjectFrom.theModifyForm(e, btn.dataset.number);
-        ModifyProjectFrom.openModifyForm();
+        ModifyProjectFrom.openModifyForm(e);
+        ModifyProjectFrom.assignOldData(e, btn);
+        ModifyProjectFrom.projectModifyIsclicked(e, true);
+
+        //modifyclose icon eventListner
+        const modifyFromlCloseIcon = document.querySelector(".modifyCloseIcon");
+        modifyFromlCloseIcon.addEventListener(
+          "click",
+          ModifyProjectFrom.closeModifyForm
+        );
+
+        //Modify Form Manipulation
+        const modifySubmitBtn = document.querySelectorAll("#modifySubmit");
+        modifySubmitBtn[0].addEventListener("click", (e) => {
+          ModifyProjectFrom.modifyProjectStorage(e);
+          ModifyProjectFrom.modifyProjectUI(e);
+        });
       });
     });
+
     ProjectControlMain.projectHighlight();
   };
+
   return {
     projectDone,
     projectDoneBtnsEventListener,
