@@ -13,5 +13,11 @@ export default class Project {
     this.notes = [];
     this.done = false;
     this.openToBeModified = false;
+    this.openToAddNote = false;
   }
+
+  //add notes
+  addNotes = (note) => {
+    this.notes.push(note);
+  };
 }

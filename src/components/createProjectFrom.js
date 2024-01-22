@@ -11,7 +11,8 @@ export default (function form() {
 
   const body = document.querySelector("body");
   const dimLightScreen = document.querySelector(".dimLightScreen");
-  const form = document.createElement("form");
+  const createForm = document.createElement("form");
+
   const closeIcon = document.createElement("img");
   const createFormName = document.createElement("h1");
 
@@ -39,7 +40,9 @@ export default (function form() {
   //methouds
   const theCreateForm = () => {
     //assign attributes
-    form.classList.add("closeForm");
+    createForm.setAttribute("id", "createForm");
+    createForm.classList.add("closeCreateForm");
+
     closeIcon.classList.add("closeIcon");
     createFormName.classList.add("createFormName");
 
@@ -92,8 +95,8 @@ export default (function form() {
     //add src for icon and img
     closeIcon.src = CloseIcon;
     //appending
-    fragment.appendChild(form);
-    form.append(
+    fragment.appendChild(createForm);
+    createForm.append(
       closeIcon,
       createFormName,
       titleContainer,
@@ -112,15 +115,15 @@ export default (function form() {
     body.append(fragment);
   };
 
-  const openForm = () => {
-    form.classList.remove("closeForm");
-    form.classList.add("openForm");
+  const openCreateForm = () => {
+    createForm.classList.remove("closeCreateForm");
+    createForm.classList.add("openCreateForm");
     dimLightScreen.classList.add("dimLightScreenOn");
     dimLightScreen.classList.remove("dimLightScreenOff");
   };
-  const closeForm = () => {
-    form.classList.remove("openForm");
-    form.classList.add("closeForm");
+  const closeCreateForm = () => {
+    createForm.classList.remove("openCreateForm");
+    createForm.classList.add("closeCreateForm");
     dimLightScreen.classList.remove("dimLightScreenOn");
     dimLightScreen.classList.add("dimLightScreenOff");
   };
@@ -149,11 +152,11 @@ export default (function form() {
       prioritySelect.value = "";
       descriptionTextArea.value = "";
       //close form
-      closeForm();
+      closeCreateForm();
       //addding the newproject to storage
       ProjectsStorage.projects.push(newProject);
     }
   };
 
-  return { theCreateForm, openForm, closeForm, createProject };
+  return { theCreateForm, openCreateForm, closeCreateForm, createProject };
 })();

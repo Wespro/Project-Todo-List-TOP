@@ -1,9 +1,8 @@
-form {
+#createForm {
   position: absolute;
   padding: 3.5rem 2rem 2rem;
-  background-color: white;
   justify-self: center;
-  align-self: start;
+  align-self: center;
   border-radius: 14px;
   border: 5px solid;
   display: flex;
@@ -27,12 +26,12 @@ form {
   margin-bottom: 0.5rem;
   text-align: center;
 }
-.openForm {
+.openCreateForm {
   transform: scale(1);
   opacity: 100;
   transition: all 0.6s ease;
 }
-.closeForm {
+.closeCreateForm {
   transform: scale(0);
   opacity: 0;
   transition: all 0.6s ease;

@@ -2,6 +2,7 @@ import ProjectsStorage from "./projectsStorage";
 import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
 import ModifyProjectFrom from "./modifyProjectFrom";
+import AddNotesForm from "./addNotesForm";
 
 export default (function () {
   //private vars
@@ -11,9 +12,6 @@ export default (function () {
   let isMed1 = "";
   let isLow1 = "";
   // project card vars
-  const modifyBtns = document.querySelectorAll(".modify");
-  const addNotesBtns = document.querySelectorAll(".addNotes");
-  const intoTasksBtn = document.querySelectorAll(".intoTasks");
 
   const projectDoneSwitchWord = (onGoing, finished) => {
     onGoing1 = onGoing;
@@ -135,10 +133,6 @@ export default (function () {
   };
   ////////////////////////
 
-  const addNotes = (note) => {
-    this.notes.push(note);
-  };
-
   ///////////////////////////////
   const modifyProjectInfoBtnsEventListener = () => {
     const modifyProjectInfoBtns = document.querySelectorAll(".modify");
@@ -158,8 +152,8 @@ export default (function () {
         );
 
         //Modify Form Manipulation
-        const modifySubmitBtn = document.querySelectorAll("#modifySubmit");
-        modifySubmitBtn[0].addEventListener("click", (e) => {
+        const modifySubmitBtn = document.querySelector("#modifySubmit");
+        modifySubmitBtn.addEventListener("click", (e) => {
           ModifyProjectFrom.modifyProjectStorage(e);
           ModifyProjectFrom.modifyProjectUI(e);
         });
@@ -169,6 +163,36 @@ export default (function () {
     ProjectControlMain.projectHighlight();
   };
 
+  const AddNotesBtnsEventListener = (e) => {
+    const AddNotesBtns = document.querySelectorAll(".addNotes");
+
+    //open AddNotes eventListener
+    AddNotesBtns.forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        AddNotesForm.openNoteForm(e);
+        AddNotesForm.AddNoteCardBtnIsclicked(e, true);
+
+        //Add Notes Form Manipulation
+        const addNotesSubmitBtn = document.querySelector("#addNoteSubmitBtn");
+        addNotesSubmitBtn.addEventListener("click", (e) => {
+          AddNotesForm.addNotesStorage(e, btn);
+          AddNotesForm.addNotesUI(e, btn);
+        });
+      });
+    });
+
+    //modifyclose icon eventListner
+    const addNotesFormlCloseIcon = document.querySelector(
+      ".addNotesFormlCloseIcon"
+    );
+    addNotesFormlCloseIcon.addEventListener(
+      "click",
+      AddNotesForm.closeNoteForm
+    );
+
+    // ProjectControlMain.projectHighlight();
+  };
+
   return {
     projectDone,
     projectDoneBtnsEventListener,
@@ -176,7 +200,7 @@ export default (function () {
     deleteProject,
     deleteProjectBtnsEventListener,
     projectPrioritySwitch,
-    addNotes,
     modifyProjectInfoBtnsEventListener,
+    AddNotesBtnsEventListener,
   };
 })();

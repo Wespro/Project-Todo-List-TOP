@@ -4,6 +4,8 @@ import ProjectControlSideBar from "./projectControlSideBar";
 import ProjectCardControl from "./projectCardControl";
 import ProjectsStorage from "./projectsStorage";
 import ModifyProjectFrom from "./modifyProjectFrom";
+import AddNotesForm from "./addNotesForm";
+
 export default function createProjectUI() {
   // golbar vars
 
@@ -18,7 +20,7 @@ export default function createProjectUI() {
   CreateProjectForm.theCreateForm();
   //add the Modify Project form
   ModifyProjectFrom.theModifyForm();
-
+  AddNotesForm.theNoteForm();
   //projects control
 
   //main control
@@ -45,6 +47,7 @@ export default function createProjectUI() {
   ProjectCardControl.projectDoneBtnsEventListener();
   ProjectCardControl.deleteProjectBtnsEventListener();
   ProjectCardControl.modifyProjectInfoBtnsEventListener();
+  ProjectCardControl.AddNotesBtnsEventListener();
 
   //sidebar vars
   const allProjects = document.querySelector(".allProjects");
@@ -94,8 +97,8 @@ export default function createProjectUI() {
   const submitBtn = document.querySelector(".submit");
 
   const closeIcon = document.querySelector(".closeIcon");
-  createBtn.addEventListener("click", CreateProjectForm.openForm);
-  closeIcon.addEventListener("click", CreateProjectForm.closeForm);
+  createBtn.addEventListener("click", CreateProjectForm.openCreateForm);
+  closeIcon.addEventListener("click", CreateProjectForm.closeCreateForm);
   submitBtn.addEventListener("click", (e) => {
     CreateProjectForm.createProject(e);
     ProjectControlMain.addProjects();
@@ -104,5 +107,6 @@ export default function createProjectUI() {
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
 }

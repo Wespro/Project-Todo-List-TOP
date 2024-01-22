@@ -5,14 +5,7 @@ export default (function ProjectManipulation() {
   const fragment = new DocumentFragment();
 
   // adding pojects
-  const addProjects = (
-    projectsSearchedFor,
-    finishedProjects,
-    onGoingProjects,
-    highPriortyProjects,
-    medPriortyProjects,
-    lowPriortyProjects
-  ) => {
+  const addProjects = (notesArray) => {
     projectsContainer.replaceChildren();
     clearEmptyCellsInArray();
     const addingProjects = (element, index) => {
@@ -31,6 +24,17 @@ export default (function ProjectManipulation() {
       const intoTasks = document.createElement("button");
       const projectDone = document.createElement("button");
       const deleteProject = document.createElement("button");
+
+      const notes = document.createElement("div");
+      const notesList = document.createElement("ul");
+      const notesListHeader = document.createElement("h2");
+
+      element.notes.forEach((note, index) => {
+        const notePoint = document.createElement("li");
+        notePoint.classList.add(`note${index}`);
+        notePoint.innerText = note;
+        notesList.append(notePoint);
+      });
 
       // assign attrs
 
@@ -53,6 +57,8 @@ export default (function ProjectManipulation() {
       projectPrioritySpan.classList.add(`${element.priority}`);
       projectDueDate.classList.add("projectDueDate");
 
+      notes.classList.add("notes");
+
       optionBtns.classList.add("optionBtns");
       modify.classList.add("modify");
       addNotes.classList.add("addNotes");
@@ -74,6 +80,8 @@ export default (function ProjectManipulation() {
       projectPrioritySpan.innerText = element.priority;
       projectDueDate.innerText = `Due-Date: ${element.dueDate}`;
 
+      notesListHeader.textContent = "Notes:";
+
       modify.innerText = "Modify Info";
       addNotes.innerText = "Add Notes";
       intoTasks.innerText = "Into Tasks";
@@ -83,7 +91,7 @@ export default (function ProjectManipulation() {
       // appending
 
       fragment.appendChild(projectCard);
-      projectCard.append(projectInfo, optionBtns);
+      projectCard.append(projectInfo, notes, optionBtns);
       projectInfo.append(
         projectTitle,
         projectDescription,
@@ -91,6 +99,9 @@ export default (function ProjectManipulation() {
         projectDueDate
       );
       projectPriority.append(projectPrioritySpan);
+
+      notes.append(notesListHeader, notesList);
+
       optionBtns.append(
         modify,
         addNotes,

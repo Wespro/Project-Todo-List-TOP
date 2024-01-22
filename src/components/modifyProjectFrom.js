@@ -42,6 +42,7 @@ export default (function form() {
   //methouds
   const theModifyForm = (btnNum) => {
     //assign attributes
+    modifyForm.setAttribute("id", "modifyForm");
     modifyForm.classList.add("closeModifyForm");
 
     modifyCloseIcon.classList.add("modifyCloseIcon");

@@ -1,4 +1,4 @@
-#modifyForm {
+#AddNotesform {
   position: absolute;
   padding: 3.5rem 2rem 2rem;
   justify-self: center;
@@ -11,7 +11,7 @@
   background-color: #d9f0ff;
   margin: 1.5rem 0;
 }
-.modifyCloseIcon {
+.addNotesFormlCloseIcon {
   width: 2.5rem;
   align-self: end;
   position: absolute;
@@ -19,32 +19,38 @@
   right: 8px;
   cursor: pointer;
 }
-.modifyCloseIcon:hover {
+.addNotesFormlCloseIcon:hover {
   width: 2.6rem;
 }
-.modifyFromName {
+.AddNotesTitle {
   margin-bottom: 0.5rem;
   text-align: center;
 }
-.openModifyForm {
+.openAddNotesForm {
   transform: scale(1);
-  opacity: 50;
+  opacity: 100;
   transition: all 0.6s ease;
 }
-.closeModifyForm {
+.closeAddNotesForm {
   transform: scale(0);
   opacity: 0;
   transition: all 0.6s ease;
 }
-.modifyTitleContainer,
-.modifyDueDateContainer,
-.modifyDueDateContainer,
-.modifyDescriptionContainer {
+
+.noteContainer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.modifyForm input {
+.notelable {
+  font-size: 1.5rem;
+}
+#noteTextarea {
+  resize: none;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+form input {
   padding: 2%;
   font-size: 1rem;
   border: none;
@@ -53,24 +59,14 @@
   outline: none;
   background-color: transparent;
 }
-.modifyForm label {
+form label {
   font-size: 1.2rem;
 }
-.modifyForm input:focus {
+form input:focus {
   border-bottom: 2px solid black;
 }
-.modifyForm select {
-  padding: 0.5rem;
-  font-size: 1rem;
-  outline: none;
-}
-.modifyDescriptionContainer textarea {
-  resize: none;
-  padding: 1rem;
-  font-size: 1rem;
-}
 
-.modifyForm button[type="submit"] {
+form button[type="submit"] {
   background-color: #e6af2e;
   font-size: 1.3rem;
   font-weight: bold;

@@ -151,7 +151,8 @@ main {
   gap: 1rem;
 }
 .projectInfo .projectDescription {
-  width: 30rem;
+  width: 30vw;
+  word-break: break-all;
 }
 
 .optionBtns {
@@ -198,14 +199,9 @@ main {
 .Low {
   color: rgb(7, 168, 243);
 }
-.notes h3 {
-  margin: 0 0 1rem;
-}
 .notes ul {
-  display: grid;
-  gap: 1rem;
+  padding: 1rem 2rem;
 }
-
 footer {
   background-color: #313b72;
   grid-area: footer;
