@@ -66,7 +66,7 @@ header {
   display: grid;
   align-content: start;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
   position: sticky;
   top: 0;
 }
@@ -88,7 +88,6 @@ header {
 main {
   grid-area: main;
   padding: 3%;
-
   overflow: scroll;
 }
 .aboutProjects {
@@ -112,15 +111,15 @@ main {
   border: none;
   outline: 2px solid #233cca;
 }
-.num-clear-create-Projects {
+.creatClearProjects {
   display: flex;
   gap: 2rem;
 }
-.num-clear-create-Projects .create {
+.creatClearProjects .createProjectBtn {
   background-color: #e6af2e;
   font-size: 1rem;
 }
-.num-clear-create-Projects .clear {
+.creatClearProjects .clearFinishedProjectsBtn {
   background-color: #d7263d;
   font-size: 1rem;
 }
@@ -153,6 +152,38 @@ main {
 .projectInfo .projectDescription {
   width: 30vw;
   word-break: break-all;
+}
+
+/* Notes */
+.notes ul {
+  margin: 1rem 0.5rem 5rem;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.noteContainerProjectCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5rem;
+  width: 60%;
+}
+.notelable {
+  font-size: 1.5rem;
+}
+
+.note {
+  font-size: 1.2rem;
+}
+.deletenoteBtn {
+  padding: 0.6rem 1rem;
+  background-color: rgb(241, 83, 83);
+}
+.deletenoteBtn:hover {
+  padding: 0.6rem 1rem;
+  background-color: rgb(230, 27, 27);
 }
 
 .optionBtns {
@@ -199,9 +230,7 @@ main {
 .Low {
   color: rgb(7, 168, 243);
 }
-.notes ul {
-  padding: 1rem 2rem;
-}
+
 footer {
   background-color: #313b72;
   grid-area: footer;

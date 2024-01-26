@@ -16,8 +16,7 @@ export default (function () {
   const AddNotesform = document.createElement("form");
   const AddNotesformcloseIcon = document.createElement("img");
   const AddNotesTitle = document.createElement("h1");
-  const notesContainer = document.createElement("div");
-  const noteContainer = document.createElement("div");
+  const noteContainerForm = document.createElement("div");
   const notelable = document.createElement("label");
   const noteTextarea = document.createElement("textarea");
   const addAnotherNote = document.createElement("button");
@@ -30,8 +29,7 @@ export default (function () {
 
     AddNotesformcloseIcon.classList.add("addNotesFormlCloseIcon");
     AddNotesTitle.classList.add("AddNotesTitle");
-    notesContainer.classList.add("notesContainer");
-    noteContainer.classList.add("noteContainer");
+    noteContainerForm.classList.add("noteContainerForm");
     notelable.classList.add("notelable");
     notelable.setAttribute("for", "notelable");
     noteTextarea.setAttribute("id", "noteTextarea");
@@ -54,11 +52,11 @@ export default (function () {
     AddNotesform.append(
       AddNotesformcloseIcon,
       AddNotesTitle,
-      notesContainer,
+      noteContainerForm,
       addNoteSubmitBtn
     );
-    notesContainer.append(noteContainer);
-    noteContainer.append(notelable, noteTextarea);
+
+    noteContainerForm.append(notelable, noteTextarea);
     body.append(fragment);
   };
   const openNoteForm = () => {

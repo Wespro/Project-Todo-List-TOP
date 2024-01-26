@@ -10,7 +10,7 @@ export default (function form() {
   const fragment = new DocumentFragment();
 
   const body = document.querySelector("body");
-  const dimLightScreen = document.querySelector(".dimLightScreen");
+
   const createForm = document.createElement("form");
 
   const closeIcon = document.createElement("img");
@@ -36,7 +36,6 @@ export default (function form() {
   const descriptionTextArea = document.createElement("textarea");
 
   const submitbtn = document.createElement("button");
-
   //methouds
   const theCreateForm = () => {
     //assign attributes
@@ -78,7 +77,7 @@ export default (function form() {
     descriptionTextArea.setAttribute("rows", "7");
     descriptionTextArea.setAttribute("cols", "25");
 
-    submitbtn.classList.add("submit");
+    submitbtn.setAttribute("id", "submit");
     submitbtn.setAttribute("type", "submit");
     //add text
     createFormName.innerText = "Create Project";
@@ -116,12 +115,14 @@ export default (function form() {
   };
 
   const openCreateForm = () => {
+    const dimLightScreen = document.querySelector(".dimLightScreen");
     createForm.classList.remove("closeCreateForm");
     createForm.classList.add("openCreateForm");
     dimLightScreen.classList.add("dimLightScreenOn");
     dimLightScreen.classList.remove("dimLightScreenOff");
   };
   const closeCreateForm = () => {
+    const dimLightScreen = document.querySelector(".dimLightScreen");
     createForm.classList.remove("openCreateForm");
     createForm.classList.add("closeCreateForm");
     dimLightScreen.classList.remove("dimLightScreenOn");
@@ -155,6 +156,7 @@ export default (function form() {
       closeCreateForm();
       //addding the newproject to storage
       ProjectsStorage.projects.push(newProject);
+      console.log(ProjectsStorage.projects);
     }
   };
 

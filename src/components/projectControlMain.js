@@ -1,11 +1,11 @@
 import ProjectsStorage from "./projectsStorage";
 
 export default (function ProjectManipulation() {
-  const projectsContainer = document.querySelector(".projects");
-  const fragment = new DocumentFragment();
-
   // adding pojects
   const addProjects = (notesArray) => {
+    const projectsContainer = document.querySelector(".projects");
+    const fragment = new DocumentFragment();
+
     projectsContainer.replaceChildren();
     clearEmptyCellsInArray();
     const addingProjects = (element, index) => {
@@ -28,12 +28,27 @@ export default (function ProjectManipulation() {
       const notes = document.createElement("div");
       const notesList = document.createElement("ul");
       const notesListHeader = document.createElement("h2");
+      if (!(element.notes.length === 0)) {
+        notesListHeader.textContent = "Notes:";
+        notes.append(notesListHeader, notesList);
+      }
 
       element.notes.forEach((note, index) => {
+        const noteContainerProjectCard = document.createElement("div");
+        noteContainerProjectCard.classList.add(`noteContainerProjectCard`);
+        noteContainerProjectCard.setAttribute("data-number", index);
+
+        const deletenoteBtn = document.createElement("button");
+        deletenoteBtn.classList.add(`deletenoteBtn`);
+        deletenoteBtn.setAttribute("data-number", index);
+        deletenoteBtn.innerText = "X";
+
         const notePoint = document.createElement("li");
-        notePoint.classList.add(`note${index}`);
+        notePoint.classList.add(`note`);
         notePoint.innerText = note;
-        notesList.append(notePoint);
+
+        noteContainerProjectCard.append(notePoint, deletenoteBtn);
+        notesList.append(noteContainerProjectCard);
       });
 
       // assign attrs
@@ -80,8 +95,6 @@ export default (function ProjectManipulation() {
       projectPrioritySpan.innerText = element.priority;
       projectDueDate.innerText = `Due-Date: ${element.dueDate}`;
 
-      notesListHeader.textContent = "Notes:";
-
       modify.innerText = "Modify Info";
       addNotes.innerText = "Add Notes";
       intoTasks.innerText = "Into Tasks";
@@ -99,8 +112,6 @@ export default (function ProjectManipulation() {
         projectDueDate
       );
       projectPriority.append(projectPrioritySpan);
-
-      notes.append(notesListHeader, notesList);
 
       optionBtns.append(
         modify,
@@ -223,7 +234,6 @@ export default (function ProjectManipulation() {
         ProjectsStorage.projects.splice(i, 1);
       }
     }
-    console.log(ProjectsStorage.projects);
   };
 
   return {

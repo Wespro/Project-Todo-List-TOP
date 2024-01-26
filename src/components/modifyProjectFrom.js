@@ -126,12 +126,16 @@ export default (function form() {
   };
 
   const openModifyForm = () => {
+    const dimLightScreen = document.querySelector(".dimLightScreen");
+    const modifyForm = document.querySelector("#modifyForm");
     modifyForm.classList.remove("closeModifyForm");
     modifyForm.classList.add("openModifyForm");
     dimLightScreen.classList.add("dimLightScreenOn");
     dimLightScreen.classList.remove("dimLightScreenOff");
   };
   const closeModifyForm = () => {
+    const dimLightScreen = document.querySelector(".dimLightScreen");
+    const modifyForm = document.querySelector("#modifyForm");
     modifyForm.classList.remove("openModifyForm");
     modifyForm.classList.add("closeModifyForm");
     dimLightScreen.classList.remove("dimLightScreenOn");

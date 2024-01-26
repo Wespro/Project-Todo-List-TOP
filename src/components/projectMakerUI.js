@@ -5,16 +5,118 @@ import ProjectCardControl from "./projectCardControl";
 import ProjectsStorage from "./projectsStorage";
 import ModifyProjectFrom from "./modifyProjectFrom";
 import AddNotesForm from "./addNotesForm";
+import projectsStorage from "./projectsStorage";
 
 export default function createProjectUI() {
-  // golbar vars
+  // const intialProjectsPage = () => {
+  //   const fragment = new DocumentFragment();
+  //   const body = document.querySelector("body");
 
-  //main vars
+  //   const screen = document.createElement("div");
+  //   const header = document.createElement("header");
+  //   const headerTitle = document.createElement("h1");
 
-  //aboutProjects vars
-  const searchBar = document.getElementById("search");
-  const clearFinishedProjectsBtn = document.querySelector(".clear");
-  const createBtn = document.querySelector(".create");
+  //   const sideBar = document.createElement("div");
+
+  //   const sideBarTitle = document.createElement("h1");
+  //   const allProjects = document.createElement("button");
+  //   const onGoingProjects = document.createElement("button");
+  //   const finishedProjects = document.createElement("button");
+  //   const highPriority = document.createElement("button");
+  //   const medPriority = document.createElement("button");
+  //   const lowPriority = document.createElement("button");
+
+  //   const main = document.createElement("main");
+
+  //   const aboutProjects = document.createElement("div");
+  //   const projectSelectedName = document.createElement("h2");
+  //   const search = document.createElement("input");
+  //   const projectNum = document.createElement("h3");
+  //   const creatClearProjects = document.createElement("div");
+  //   const createProjectBtn = document.createElement("button");
+  //   const clearFinishedProjectsBtn = document.createElement("button");
+
+  //   const projects = document.createElement("div");
+
+  //   const footer = document.createElement("footer");
+
+  //   const githubLink = document.createElement("a");
+
+  //   adding attrs
+  //   screen.classList.add("dimLightScreen", "dimLightScreenOff");
+
+  //   sideBar.classList.add("sideBar");
+
+  //   allProjects.classList.add("sidBarBtn", "onGoingProjects");
+  //   finishedProjects.classList.add("sidBarBtn", "finishedProjects");
+  //   highPriority.classList.add("sidBarBtn", "highPriority");
+  //   medPriority.classList.add("sidBarBtn", "medPriority");
+  //   lowPriority.classList.add("sidBarBtn", "lowPriority");
+
+  //   aboutProjects.classList.add("aboutProjects");
+  //   projectSelectedName.classList.add("projectSelectedName");
+  //   search.setAttribute("id", "search");
+  //   search.setAttribute("type", "search");
+  //   search.setAttribute("placeholder", "Search for a project");
+
+  //   projectNum.classList.add("projectNum");
+  //   creatClearProjects.classList.add("creatClearProjects");
+  //   createProjectBtn.classList.add("createProjectBtn");
+  //   clearFinishedProjectsBtn.classList.add("clearFinishedProjectsBtn");
+
+  //   projects.classList.add("projects");
+
+  //   githubLink.setAttribute("href", "https://github.com/Wespro");
+
+  //   headerTitle.innerText = "Projects";
+  //   sideBarTitle.innerText = "Projects Control";
+  //   allProjects.innerText = "All Projects";
+  //   onGoingProjects.innerText = "On-Going Projects";
+  //   finishedProjects.innerText = "Finished Projects";
+  //   highPriority.innerText = "High Priority";
+  //   medPriority.innerText = "Medium Priority";
+  //   lowPriority.innerText = "Low Priority";
+
+  //   projectSelectedName.innerText = "Project: Test";
+  //   projectNum.innerText = "1 project";
+
+  //   createProjectBtn.innerText = "+ Create project";
+  //   clearFinishedProjectsBtn.innerText = "Clear Finised Projects";
+
+  //   footer.innerHTML = `Copyright © 2023 `;
+
+  //   fragment.append(screen, header, sideBar, main, footer);
+  //   header.append(headerTitle);
+  //   sideBar.append(
+  //     sideBarTitle,
+  //     allProjects,
+  //     onGoingProjects,
+  //     finishedProjects,
+  //     highPriority,
+  //     medPriority,
+  //     lowPriority
+  //   );
+  //   main.append(aboutProjects, projects);
+
+  //   aboutProjects.append(
+  //     projectSelectedName,
+  //     search,
+  //     projectNum,
+  //     creatClearProjects
+  //   );
+  //   creatClearProjects.append(createProjectBtn, clearFinishedProjectsBtn);
+  //   footer.append(githubLink);
+  //   body.append(fragment);
+
+  //   /////////////////////////////////////////////////////////
+  //   aboutProjects vars
+  //   const searchBar = document.getElementById("search");
+  //   const clearFinishedProjectsBtn = document.querySelector(
+  //     ".clearFinishedProjectsBtn"
+  //   );
+  //   const createProjectBtn = document.querySelector(".createProjectBtn");
+  // };
+  // intialProjectsPage();
 
   //add the Create Project form
   CreateProjectForm.theCreateForm();
@@ -31,16 +133,24 @@ export default function createProjectUI() {
 
   ProjectControlMain.addProjectsNum(allProjectCardsNodes.length);
 
-  searchBar.addEventListener("input", () => {
+  search.addEventListener("input", (e) => {
     ProjectControlMain.searchBarFunciton();
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
 
-  clearFinishedProjectsBtn.addEventListener("click", () => {
+  const clearFinishedProjectsBtn = document.querySelector(
+    ".clearFinishedProjectsBtn"
+  );
+  console.log(clearFinishedProjectsBtn);
+  clearFinishedProjectsBtn.addEventListener("click", (e) => {
     ProjectControlMain.clearFinishedProjects();
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
 
   //card btns intial asssiment of event listner
@@ -57,47 +167,59 @@ export default function createProjectUI() {
   const highPriortyProjects = document.querySelector(".highPriority");
   const medPriortyProjects = document.querySelector(".medPriority");
   const lowPriortyProjects = document.querySelector(".lowPriority");
-
-  //sidebar control
-  allProjects.addEventListener("click", () => {
+  // sidebar control
+  allProjects.addEventListener("click", (e) => {
     ProjectControlMain.addProjects();
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectControlMain.addProjectsNum(allProjectCardsNodes.length);
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
   onGoingProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.onGoingProjectsDisplay();
     ProjectCardControl.projectDoneSwitchWord("onGoing");
     ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
   finishedProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.finishedProjectsDisplay();
     ProjectCardControl.projectDoneSwitchWord(undefined, "finish");
     ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
 
-  highPriortyProjects.addEventListener("click", () => {
+  highPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.highPriortyProjectsDisplay();
     ProjectCardControl.projectPrioritySwitch("high");
     ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
-  medPriortyProjects.addEventListener("click", () => {
+  medPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.medPriortyProjectsDisplay();
     ProjectCardControl.projectPrioritySwitch(undefined, "med");
     ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
 
   lowPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.lowPriortyProjectsDisplay();
     ProjectCardControl.projectPrioritySwitch(undefined, undefined, "low");
     ProjectCardControl.deleteProjectBtnsEventListener();
+    ProjectCardControl.modifyProjectInfoBtnsEventListener();
+    ProjectCardControl.AddNotesBtnsEventListener(e);
   });
   //create Form Manipulation
 
-  const submitBtn = document.querySelector(".submit");
+  const submitBtn = document.querySelector("#submit");
 
   const closeIcon = document.querySelector(".closeIcon");
-  createBtn.addEventListener("click", CreateProjectForm.openCreateForm);
+  const createProjectBtn = document.querySelector(".createProjectBtn");
+  createProjectBtn.addEventListener("click", CreateProjectForm.openCreateForm);
   closeIcon.addEventListener("click", CreateProjectForm.closeCreateForm);
   submitBtn.addEventListener("click", (e) => {
     CreateProjectForm.createProject(e);

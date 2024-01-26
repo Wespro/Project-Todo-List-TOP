@@ -163,6 +163,32 @@ export default (function () {
     ProjectControlMain.projectHighlight();
   };
 
+  const deleteNoteStorage = (e) => {
+    const projectCardUI =
+      e.target.parentElement.parentElement.parentElement.parentElement;
+    const noteProjectCardUI = e.target.parentElement;
+
+    ProjectsStorage.projects.forEach((project) => {
+      // console.log(
+      //   Number(projectCardUI.attributes["data-number"].value),
+      //   project.projectKey
+      // );
+      if (
+        Number(projectCardUI.attributes["data-number"].value) ===
+        project.projectKey
+      ) {
+        project.notes.splice(
+          Number(noteProjectCardUI.attributes["data-number"].value),
+          1
+        );
+        // delete project.notes[
+        //   Number(noteProjectCardUI.attributes["data-number"].value)
+        // ];
+        UpdateUI(e);
+      }
+    });
+  };
+
   const AddNotesBtnsEventListener = (e) => {
     const AddNotesBtns = document.querySelectorAll(".addNotes");
 
@@ -190,9 +216,27 @@ export default (function () {
       AddNotesForm.closeNoteForm
     );
 
+    // deletenote btns EventListener
+    const deletenoteBtns = document.querySelectorAll(".deletenoteBtn");
+
+    deletenoteBtns.forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        deleteNoteStorage(e);
+      });
+    });
+
     // ProjectControlMain.projectHighlight();
   };
 
+  const UpdateUI = (e) => {
+    ProjectControlMain.addProjects();
+    ProjectControlMain.projectHighlight();
+    ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
+    projectDoneBtnsEventListener();
+    deleteProjectBtnsEventListener();
+    modifyProjectInfoBtnsEventListener();
+    AddNotesBtnsEventListener(e);
+  };
   return {
     projectDone,
     projectDoneBtnsEventListener,
