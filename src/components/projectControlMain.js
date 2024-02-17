@@ -2,12 +2,14 @@ import ProjectsStorage from "./projectsStorage";
 
 export default (function ProjectManipulation() {
   // adding pojects
-  const addProjects = (notesArray) => {
+  const addProjects = () => {
     const projectsContainer = document.querySelector(".projects");
     const fragment = new DocumentFragment();
 
     projectsContainer.replaceChildren();
+
     clearEmptyCellsInArray();
+
     const addingProjects = (element, index) => {
       const projectCard = document.createElement("div");
 

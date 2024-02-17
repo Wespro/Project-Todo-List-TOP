@@ -5,6 +5,6 @@ import ProjecstUI from "./components/projectMakerUI";
 import IntoTask from "./components/intoTask";
 
 (function toDoList() {
-  ProjecstUI();
-  // IntoTask();
+  // ProjecstUI();
+  IntoTask.displayProjectTasks();
 })();
