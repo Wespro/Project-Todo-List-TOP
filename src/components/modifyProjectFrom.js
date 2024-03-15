@@ -12,7 +12,7 @@ export default (function form() {
   const fragment = new DocumentFragment();
 
   const body = document.querySelector("body");
-  const dimLightScreen = document.querySelector(".dimLightScreen");
+
   const modifyForm = document.createElement("form");
   const modifyCloseIcon = document.createElement("img");
 
@@ -121,7 +121,6 @@ export default (function form() {
       modifyPrioritySelect2,
       modifyPrioritySelect3
     );
-
     body.append(fragment);
   };
 

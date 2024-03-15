@@ -1,10 +1,7 @@
 import "./css/styles.css";
 //components
-
-import ProjecstUI from "./components/projectMakerUI";
-import IntoTask from "./components/intoTask";
+import createProjectUI from "./components/projectMakerUI";
 
 (function toDoList() {
-  // ProjecstUI();
-  IntoTask.displayProjectTasks();
+  createProjectUI();
 })();

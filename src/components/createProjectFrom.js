@@ -2,14 +2,15 @@ import "../css/createProjectForm.css";
 //icons
 
 import CloseIcon from "../img & icnons/icons/close-outline.svg";
+import projectCardControl from "./projectCardControl";
 //components
 import ProjectMaker from "./projectMaker";
 import ProjectsStorage from "./projectsStorage";
 
 export default (function form() {
   const fragment = new DocumentFragment();
-
   const body = document.querySelector("body");
+  const homeInnerBody = document.querySelector(".homeInnerBody");
 
   const createForm = document.createElement("form");
 
@@ -110,7 +111,6 @@ export default (function form() {
     descriptionContainer.append(descriptionLabel, descriptionTextArea);
 
     prioritySelect.append(prioritySelect1, prioritySelect2, prioritySelect3);
-
     body.append(fragment);
   };
 
@@ -156,7 +156,7 @@ export default (function form() {
       closeCreateForm();
       //addding the newproject to storage
       ProjectsStorage.projects.push(newProject);
-      console.log(ProjectsStorage.projects);
+      projectCardControl.updateUI();
     }
   };
 

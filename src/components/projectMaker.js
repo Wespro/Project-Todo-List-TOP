@@ -14,6 +14,9 @@ export default class Project {
     this.done = false;
     this.openToBeModified = false;
     this.openToAddNote = false;
+    this.onListTasks = [];
+    this.inProgressTasks = [];
+    this.doneTasks = [];
   }
 
   //add notes

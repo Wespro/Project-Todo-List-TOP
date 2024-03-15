@@ -1,5 +1,10 @@
+body {
+  position: relative;
+}
 #modifyForm {
   position: absolute;
+  top: 5%;
+  left: 42%;
   padding: 3.5rem 2rem 2rem;
   justify-self: center;
   align-self: center;
@@ -10,6 +15,7 @@
   gap: 1.3rem;
   background-color: #d9f0ff;
   margin: 1.5rem 0;
+  z-index: 2;
 }
 .modifyCloseIcon {
   width: 2.5rem;

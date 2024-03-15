@@ -1,14 +1,23 @@
 import ProjectsStorage from "./projectsStorage";
-
+import ProjectCardControl from "./projectCardControl";
 export default (function ProjectManipulation() {
   // adding pojects
   const addProjects = () => {
+    // active BTN
+    const sidBarBtns = document.querySelectorAll(".sidBarBtn");
+    const allProjectsBtn = document.querySelector(".allProjects");
+    sidBarBtns.forEach((node) => {
+      node.classList.remove("activeSidebarBtn");
+    });
+
+    allProjectsBtn.classList.add("activeSidebarBtn");
+
+    /////
+
     const projectsContainer = document.querySelector(".projects");
     const fragment = new DocumentFragment();
 
     projectsContainer.replaceChildren();
-
-    clearEmptyCellsInArray();
 
     const addingProjects = (element, index) => {
       const projectCard = document.createElement("div");
@@ -69,6 +78,7 @@ export default (function ProjectManipulation() {
 
       projectInfo.classList.add("projectInfo");
       projectTitle.classList.add("projectTitle");
+      projectTitle.setAttribute("data-number", `${index}`);
       projectDescription.classList.add("projectDescription");
       projectPriority.classList.add("projectPriority");
       projectPrioritySpan.classList.add(`${element.priority}`);
@@ -175,67 +185,51 @@ export default (function ProjectManipulation() {
   //sreach-bar functionality
   const searchBarFunciton = () => {
     const searchBar = document.getElementById("search");
-    const projectsSearchedFor = ProjectsStorage.projects.filter((project) => {
-      return project.title
-        .toLowerCase()
-        .includes(searchBar.value.toLowerCase());
+    // const projectsSearchedFor = ProjectsStorage.projects.filter((project) => {
+    //   return project.title
+    //     .toLowerCase()
+    //     .includes(searchBar.value.toLowerCase());
+    // });
+    const allProjectCardsNodes = document.querySelectorAll(".projectCard");
+    const allProjectTitles = document.querySelectorAll(".projectTitle");
+    allProjectCardsNodes.forEach((node) => {
+      node.style.display = "none";
+      console.log(node);
     });
 
-    addProjects(projectsSearchedFor);
-    addProjectsNum();
+    const projectsSearchedFor = [];
+
+    allProjectTitles.forEach((node) => {
+      allProjectCardsNodes.forEach((bNode) => {
+        if (
+          node.textContent
+            .toLowerCase()
+            .includes(searchBar.value.toLowerCase()) &&
+          bNode.attributes["data-number"].value ===
+            node.attributes["data-number"].value
+        ) {
+          projectsSearchedFor.push(bNode);
+        } else {
+          return;
+        }
+      });
+    });
+    projectsSearchedFor.forEach((node) => {
+      node.style.display = "flex";
+    });
+    addProjectsNum(projectsSearchedFor.length);
   };
 
   //Clear Finished Projects
   const clearFinishedProjects = () => {
-    const allProjectKeys = [];
-    const keysOffinishedProjects = [];
-
-    const finishedProjects = ProjectsStorage.projects.filter((project) => {
-      return project.done;
+    const inPorgressProjects = ProjectsStorage.projects.filter((project) => {
+      return !project.done;
     });
-
-    finishedProjects.forEach((project) => {
-      keysOffinishedProjects.push(project.projectKey);
-    });
-
-    ProjectsStorage.projects.forEach((project) => {
-      allProjectKeys.push(project.projectKey);
-    });
-    //removing the empty cells in the nodelist
-    allProjectKeys.forEach((projectKey) => {
-      keysOffinishedProjects.forEach((finishedProjectKey) => {
-        if (projectKey === finishedProjectKey) {
-          delete ProjectsStorage.projects[projectKey];
-        }
-      });
-    });
-    //reremoving the empty cells  in the nodelist because of index chaning
-    allProjectKeys.forEach((projectKey) => {
-      keysOffinishedProjects.forEach((finishedProjectKey) => {
-        if (projectKey === finishedProjectKey) {
-          delete ProjectsStorage.projects[projectKey];
-        }
-      });
-    });
+    // empty projects storage and putting only the inPorgressProjects
+    ProjectsStorage.projects = [...inPorgressProjects];
 
     //update the projects Dislpay
-    addProjects();
-    addProjectsNum(ProjectsStorage.projects.length);
-  };
-
-  const clearEmptyCellsInArray = () => {
-    //removing the empty cells in the storge
-    for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
-      if (ProjectsStorage.projects[i] == null) {
-        ProjectsStorage.projects.splice(i, 1);
-      }
-    }
-    //reremoving the empty cells in the storge because of index chaning
-    for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
-      if (ProjectsStorage.projects[i] == null) {
-        ProjectsStorage.projects.splice(i, 1);
-      }
-    }
+    ProjectCardControl.updateUI();
   };
 
   return {

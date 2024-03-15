@@ -12,6 +12,7 @@ export default (function ProjectsStorage() {
       "Lorem ipsum dolor sit amet consectetur adipisicing elit.Sint dolorum distinctio magni similique libero suscipit!",
       0
     );
+    testProject.onListTasks.push("testTask");
 
     projects.push(testProject);
   };

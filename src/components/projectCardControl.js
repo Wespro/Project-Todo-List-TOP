@@ -3,7 +3,8 @@ import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
 import ModifyProjectFrom from "./modifyProjectFrom";
 import AddNotesForm from "./addNotesForm";
-
+// import AddTaskForm from "./intoTask/addTaskForm";
+import IntoTask from "./intoTask/intoTask";
 export default (function () {
   //private vars
   let onGoing1 = "";
@@ -184,7 +185,7 @@ export default (function () {
         // delete project.notes[
         //   Number(noteProjectCardUI.attributes["data-number"].value)
         // ];
-        UpdateUI(e);
+        updateUI(e);
       }
     });
   };
@@ -228,15 +229,28 @@ export default (function () {
     // ProjectControlMain.projectHighlight();
   };
 
-  const UpdateUI = (e) => {
+  //into tasks
+  const intoTasksBtnsEventListener = (e) => {
+    const intoTaskBtns = document.querySelectorAll(".intoTasks");
+
+    intoTaskBtns.forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        IntoTask.displayProjectTasks(btn.attributes["data-number"].value);
+      });
+    });
+  };
+
+  const updateUI = (e) => {
     ProjectControlMain.addProjects();
     ProjectControlMain.projectHighlight();
     ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
-    projectDoneBtnsEventListener();
-    deleteProjectBtnsEventListener();
+    projectDoneBtnsEventListener(e);
+    deleteProjectBtnsEventListener(e);
     modifyProjectInfoBtnsEventListener();
     AddNotesBtnsEventListener(e);
+    intoTasksBtnsEventListener(e);
   };
+
   return {
     projectDone,
     projectDoneBtnsEventListener,
@@ -246,5 +260,7 @@ export default (function () {
     projectPrioritySwitch,
     modifyProjectInfoBtnsEventListener,
     AddNotesBtnsEventListener,
+    intoTasksBtnsEventListener,
+    updateUI,
   };
 })();

@@ -1,0 +1,51 @@
+
+   const allProjectKeys = [];
+
+    const keysOffinishedProjects = [];
+
+    const finishedProjects = ProjectsStorage.projects.filter((project) => {
+      return project.done;
+    });
+    ProjectsStorage.projects.forEach((project) => {
+      allProjectKeys.push(project.projectKey);
+    });
+
+    finishedProjects.forEach((project) => {
+      keysOffinishedProjects.push(project.projectKey);
+    });
+// removing the empty cells in the nodelist
+    // allProjectKeys.forEach((projectKey) => {
+    //   keysOffinishedProjects.forEach((finishedProjectKey) => {
+    //     if (projectKey === finishedProjectKey) {
+    //       delete ProjectsStorage.projects[projectKey];
+    //     }
+    //   });
+    // });
+    // reremoving the empty cells  in the nodelist because of index chaning
+    // allProjectKeys.forEach((projectKey) => {
+    //   keysOffinishedProjects.forEach((finishedProjectKey) => {
+    //     if (projectKey === finishedProjectKey) {
+    //       delete ProjectsStorage.projects[projectKey];
+    //     }
+    //   });
+    // });
+
+    //update the projects Dislpay
+    // addProjects();
+    // addProjectsNum(ProjectsStorage.projects.length);
+
+
+  // const clearEmptyCellsInArray = () => {
+  //   //removing the empty cells in the storge
+  //   for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
+  //     if (ProjectsStorage.projects[i] == null) {
+  //       ProjectsStorage.projects.splice(i, 1);
+  //     }
+  //   }
+  //   //reremoving the empty cells in the storge because of index chaning
+  //   for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
+  //     if (ProjectsStorage.projects[i] == null) {
+  //       ProjectsStorage.projects.splice(i, 1);
+  //     }
+  //   }
+  // };

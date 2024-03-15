@@ -11,7 +11,9 @@ import ProjectCardControl from "./projectCardControl";
 
 export default (function () {
   const fragment = new DocumentFragment();
+
   const body = document.querySelector("body");
+
   const dimLightScreen = document.querySelector(".dimLightScreen");
   const AddNotesform = document.createElement("form");
   const AddNotesformcloseIcon = document.createElement("img");
@@ -31,7 +33,7 @@ export default (function () {
     AddNotesTitle.classList.add("AddNotesTitle");
     noteContainerForm.classList.add("noteContainerForm");
     notelable.classList.add("notelable");
-    notelable.setAttribute("for", "notelable");
+    notelable.setAttribute("for", "noteTextarea");
     noteTextarea.setAttribute("id", "noteTextarea");
     noteTextarea.setAttribute("required", "");
     noteTextarea.setAttribute("cols", "35");
@@ -60,12 +62,15 @@ export default (function () {
     body.append(fragment);
   };
   const openNoteForm = () => {
+    const dimLightScreen = document.querySelector(".dimLightScreen");
     AddNotesform.classList.remove("closeAddNotesForm");
     AddNotesform.classList.add("openAddNotesForm");
+
     dimLightScreen.classList.add("dimLightScreenOn");
     dimLightScreen.classList.remove("dimLightScreenOff");
   };
   const closeNoteForm = () => {
+    const dimLightScreen = document.querySelector(".dimLightScreen");
     AddNotesform.classList.remove("openAddNotesForm");
     AddNotesform.classList.add("closeAddNotesForm");
     dimLightScreen.classList.remove("dimLightScreenOn");
@@ -100,7 +105,6 @@ export default (function () {
     if (!noteTextarea.value) {
       return;
     } else if (noteTextarea.value) {
-      // console.log("dsadsa");
       ProjectControlMain.addProjects();
       ProjectControlMain.projectHighlight();
       ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
