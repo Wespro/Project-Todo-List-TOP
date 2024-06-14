@@ -70,8 +70,7 @@ export default (function ProjectManipulation() {
       projectCard.classList.add(
         "projectCard",
         element.priority.toLowerCase(),
-        element.done,
-        element.title
+        element.done
       );
 
       projectCard.setAttribute("data-number", `${element.projectKey}`);
@@ -91,7 +90,7 @@ export default (function ProjectManipulation() {
       notes.classList.add("notes");
 
       optionBtns.classList.add("optionBtns");
-      modify.classList.add("modify", `${element.title}`);
+      modify.classList.add("modify");
       addNotes.classList.add("addNotes");
       intoTasks.classList.add("intoTasks");
       projectDone.classList.add("projectDone");

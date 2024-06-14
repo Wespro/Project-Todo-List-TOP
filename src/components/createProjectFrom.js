@@ -156,10 +156,11 @@ export default (function form() {
 
         //addding the newproject to storage
         // ProjectsStorage.projects.push(newProject);
-
+        console.log(newProject);
         localStorage.setItem(
           `${newProject.projectKey}`,
-          JSON.stringify(newProject)
+          JSON.stringify(newProject),
+          console.log(JSON.stringify(newProject))
         );
 
         //reset form
