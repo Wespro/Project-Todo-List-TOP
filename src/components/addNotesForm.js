@@ -75,43 +75,56 @@ export default (function () {
     AddNotesform.classList.add("closeAddNotesForm");
     dimLightScreen.classList.remove("dimLightScreenOn");
     dimLightScreen.classList.add("dimLightScreenOff");
+    //reset all openToAddNote
+    for (let i = 0; i < localStorage.length; i++) {
+      const project = JSON.parse(localStorage.getItem(localStorage.key(i)));
+
+      project.openToAddNote = false;
+
+      localStorage.setItem(`${project.projectKey}`, JSON.stringify(project));
+    }
   };
 
   const AddNoteCardBtnIsclicked = (e, state) => {
-    const btnNum = Number(e.target.attributes["data-number"].value);
-    ProjectsStorage.projects.forEach((project) => {
-      if (project.projectKey === btnNum) {
-        project.openToAddNote = state;
+    const nodeKey = e.target.attributes["data-number"].value;
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const project = JSON.parse(localStorage.getItem(localStorage.key(i)));
+
+      if (project.projectKey === nodeKey) {
+        project.openToAddNote = true;
+
+        localStorage.setItem(`${project.projectKey}`, JSON.stringify(project));
       }
-    });
+    }
   };
   const addNotesStorage = (e) => {
     if (!noteTextarea.value) {
       return;
     } else {
       e.preventDefault();
+
       //addding the new note to storage
-      ProjectsStorage.projects.forEach((project) => {
+      for (let i = 0; i < localStorage.length; i++) {
+        const project = JSON.parse(localStorage.getItem(localStorage.key(i)));
         if (project.openToAddNote) {
           project.notes.push(noteTextarea.value);
+
           project.openToAddNote = false;
-        } else {
-          return;
+
+          localStorage.setItem(
+            `${project.projectKey}`,
+            JSON.stringify(project)
+          );
         }
-      });
+      }
     }
   };
   const addNotesUI = (e, btn) => {
     if (!noteTextarea.value) {
       return;
     } else if (noteTextarea.value) {
-      ProjectControlMain.addProjects();
-      ProjectControlMain.projectHighlight();
-      ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
-      ProjectCardControl.projectDoneBtnsEventListener();
-      ProjectCardControl.deleteProjectBtnsEventListener();
-      ProjectCardControl.modifyProjectInfoBtnsEventListener();
-      ProjectCardControl.AddNotesBtnsEventListener();
+      ProjectCardControl.updateUI();
 
       //reset form
 

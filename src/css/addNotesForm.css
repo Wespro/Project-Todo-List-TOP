@@ -6,7 +6,7 @@ body {
 #AddNotesform {
   position: absolute;
   top: 20%;
-  left: 42%;
+  left: 35%;
   padding: 3.5rem 2rem 2rem;
   justify-self: center;
   align-self: center;
@@ -78,4 +78,95 @@ form button[type="submit"] {
   padding: 1rem 5vw;
   width: max-content;
   margin: 0 auto;
+}
+@media only screen and (max-width: 1300px) {
+  #AddNotesform {
+    top: 5%;
+    left: 30%;
+    padding: 3.5rem 2rem 2rem;
+    justify-self: center;
+    align-self: center;
+    border-radius: 14px;
+    border: 5px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    background-color: #d9f0ff;
+    margin: 1.5rem 0;
+    z-index: 2;
+  }
+  .openAddNotesForm {
+    transform: scale(0.7);
+    opacity: 100;
+    transition: all 0.6s ease;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  #AddNotesform {
+    top: 5%;
+    left: 20%;
+    padding: 3.5rem 2rem 2rem;
+    justify-self: center;
+    align-self: center;
+    border-radius: 14px;
+    border: 5px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    background-color: #d9f0ff;
+    margin: 1.5rem 0;
+    z-index: 2;
+  }
+  .openAddNotesForm {
+    transform: scale(0.6);
+    opacity: 100;
+    transition: all 0.6s ease;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #AddNotesform {
+    top: 5%;
+    left: -4%;
+    padding: 3.5rem 2rem 2rem;
+    justify-self: center;
+    align-self: center;
+    border-radius: 14px;
+    border: 5px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    background-color: #d9f0ff;
+    margin: 1.5rem 0;
+    z-index: 2;
+  }
+  .openAddNotesForm {
+    transform: scale(0.5);
+    opacity: 100;
+    transition: all 0.6s ease;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #AddNotesform {
+    top: 20%;
+    left: -20%;
+    padding: 3.5rem 2rem 2rem;
+    justify-self: center;
+    align-self: center;
+    border-radius: 14px;
+    border: 5px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    background-color: #d9f0ff;
+    margin: 1.5rem 0;
+    z-index: 2;
+  }
+  .openAddNotesForm {
+    transform: scale(0.5);
+    opacity: 100;
+    transition: all 0.6s ease;
+  }
 }

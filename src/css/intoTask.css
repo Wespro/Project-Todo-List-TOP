@@ -33,7 +33,7 @@ button:hover {
 }
 
 .bodyInnerContainer {
-  padding: 3rem 5rem;
+  padding: 5rem;
   width: 100%;
   height: 100%;
   position: relative;
@@ -44,13 +44,19 @@ button:hover {
   gap: 2rem;
   text-align: center;
 }
+.bodyInnerContainer .projectTitle {
+  margin-bottom: 2rem;
+}
 .tasksContainer {
+  flex-wrap: wrap;
   width: 100%;
   height: 100%;
   position: relative;
   background-color: #d9f0ff;
+  justify-content: space-between;
   display: flex;
   gap: 3rem;
+  min-height: 90vh;
 }
 
 .onListTasks {
@@ -62,8 +68,11 @@ button:hover {
   display: flex;
   flex-direction: column;
   position: relative;
-  flex: 1;
   align-items: center;
+  width: 15rem;
+  flex-shrink: 0;
+  flex-grow: 1;
+  border-radius: 14px 0 14px 14px;
 }
 .onListTasksTop {
   display: flex;
@@ -80,8 +89,12 @@ button:hover {
 }
 .addTaskCard {
   position: absolute;
-  right: 10px;
-  top: 25px;
+  background-color: #7d7c7c;
+  color: aliceblue;
+  right: 0px;
+  top: -40px;
+  border-radius: 0px;
+  box-shadow: 4px 3px 5px black;
 }
 
 .inprogressTasks {
@@ -90,12 +103,13 @@ button:hover {
   padding: 2rem;
   border-radius: 14px;
   box-shadow: 4px 3px 5px black;
-  min-height: 75vh;
-  flex: 1;
-  width: 20rem;
+  width: 15rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  flex-shrink: 0;
+  flex-grow: 2;
 }
 .doneTasks {
   background-color: green;
@@ -104,23 +118,26 @@ button:hover {
   border-radius: 14px;
   box-shadow: 4px 3px 5px black;
   color: white;
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 15rem;
+  flex-shrink: 0;
+  flex-grow: 1;
 }
 /* sidebar */
 .backToHome {
   position: absolute;
   left: 4%;
   top: 3%;
-  width: 15rem;
-  padding: 1.5rem 3rem;
-  text-align: center;
+  padding: 1rem 1.5rem;
   background-color: #e6af2e;
   gap: 2rem;
-  /* position: sticky;
-  top: 0; */
+  position: sticky;
+  top: 0px;
+  right: -50px;
+  align-self: start;
+  z-index: 1;
 }
 .taskCard {
   justify-self: center;
@@ -147,8 +164,10 @@ button:hover {
 .taskActions {
   border-radius: 14px;
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   color: black;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .moveToOnlist {

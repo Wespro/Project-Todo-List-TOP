@@ -1,5 +1,6 @@
 import ProjectsStorage from "./projectsStorage";
 import ProjectCardControl from "./projectCardControl";
+
 export default (function ProjectManipulation() {
   // adding pojects
   const addProjects = () => {
@@ -19,7 +20,7 @@ export default (function ProjectManipulation() {
 
     projectsContainer.replaceChildren();
 
-    const addingProjects = (element, index) => {
+    const addingProjects = (element) => {
       const projectCard = document.createElement("div");
 
       const projectInfo = document.createElement("div");
@@ -39,38 +40,41 @@ export default (function ProjectManipulation() {
       const notes = document.createElement("div");
       const notesList = document.createElement("ul");
       const notesListHeader = document.createElement("h2");
+
       if (!(element.notes.length === 0)) {
         notesListHeader.textContent = "Notes:";
         notes.append(notesListHeader, notesList);
       }
 
-      element.notes.forEach((note, index) => {
-        const noteContainerProjectCard = document.createElement("div");
-        noteContainerProjectCard.classList.add(`noteContainerProjectCard`);
-        noteContainerProjectCard.setAttribute("data-number", index);
+      if (element.notes) {
+        element.notes.forEach((note, index) => {
+          const noteContainerProjectCard = document.createElement("div");
+          noteContainerProjectCard.classList.add("noteContainerProjectCard");
+          noteContainerProjectCard.setAttribute("data-number", index);
 
-        const deletenoteBtn = document.createElement("button");
-        deletenoteBtn.classList.add(`deletenoteBtn`);
-        deletenoteBtn.setAttribute("data-number", index);
-        deletenoteBtn.innerText = "X";
+          const deletenoteBtn = document.createElement("button");
+          deletenoteBtn.classList.add("deletenoteBtn");
+          deletenoteBtn.setAttribute("data-number", index);
+          deletenoteBtn.innerText = "X";
 
-        const notePoint = document.createElement("li");
-        notePoint.classList.add(`note`);
-        notePoint.innerText = note;
+          const notePoint = document.createElement("li");
+          notePoint.classList.add("note");
+          notePoint.innerText = note;
 
-        noteContainerProjectCard.append(notePoint, deletenoteBtn);
-        notesList.append(noteContainerProjectCard);
-      });
-
+          noteContainerProjectCard.append(notePoint, deletenoteBtn);
+          notesList.append(noteContainerProjectCard);
+        });
+      }
       // assign attrs
 
       projectCard.classList.add(
         "projectCard",
         element.priority.toLowerCase(),
-        element.done
+        element.done,
+        element.title
       );
 
-      projectCard.setAttribute("data-number", `${index}`);
+      projectCard.setAttribute("data-number", `${element.projectKey}`);
 
       if (element.done) {
         projectCard.classList.add("finishedProject");
@@ -78,7 +82,7 @@ export default (function ProjectManipulation() {
 
       projectInfo.classList.add("projectInfo");
       projectTitle.classList.add("projectTitle");
-      projectTitle.setAttribute("data-number", `${index}`);
+      projectTitle.setAttribute("data-number", `${element.projectKey}`);
       projectDescription.classList.add("projectDescription");
       projectPriority.classList.add("projectPriority");
       projectPrioritySpan.classList.add(`${element.priority}`);
@@ -87,18 +91,18 @@ export default (function ProjectManipulation() {
       notes.classList.add("notes");
 
       optionBtns.classList.add("optionBtns");
-      modify.classList.add("modify");
+      modify.classList.add("modify", `${element.title}`);
       addNotes.classList.add("addNotes");
       intoTasks.classList.add("intoTasks");
-      projectDone.classList.add(`projectDone`);
-      deleteProject.classList.add(`delete`);
+      projectDone.classList.add("projectDone");
+      deleteProject.classList.add("delete");
 
       //add classes as a key for its project
-      modify.setAttribute("data-number", `${index}`);
-      addNotes.setAttribute("data-number", `${index}`);
-      intoTasks.setAttribute("data-number", `${index}`);
-      projectDone.setAttribute("data-number", `${index}`);
-      deleteProject.setAttribute("data-number", `${index}`);
+      modify.setAttribute("data-number", `${element.projectKey}`);
+      addNotes.setAttribute("data-number", `${element.projectKey}`);
+      intoTasks.setAttribute("data-number", `${element.projectKey}`);
+      projectDone.setAttribute("data-number", `${element.projectKey}`);
+      deleteProject.setAttribute("data-number", `${element.projectKey}`);
 
       //add text
       projectTitle.innerText = element.title;
@@ -135,9 +139,17 @@ export default (function ProjectManipulation() {
       projectsContainer.append(fragment);
     };
 
-    ProjectsStorage.projects.forEach((project, index) => {
-      addingProjects(project, index);
-    });
+    for (let i = 0; i < localStorage.length; i++) {
+      addingProjects(JSON.parse(localStorage.getItem(localStorage.key(i))));
+    }
+    // console.log(localStorage);
+
+    // JSON.parse(localStorage.getItem("projects")).forEach((project, index) => {
+    //   addingProjects(project, index);
+    // });
+    // ProjectsStorage.projects.forEach((project, index) => {
+    //   addingProjects(project, index);
+    // });
   };
 
   //highlight the curnt project been clicked
@@ -145,28 +157,30 @@ export default (function ProjectManipulation() {
     const projectsNodeList = document.querySelectorAll(".projectCard");
     const projectSelectedName = document.querySelector(".projectSelectedName");
 
-    projectsNodeList.forEach((project) => {
-      project.addEventListener("click", (e) => {
+    projectsNodeList.forEach((projectM) => {
+      const cardkey = projectM.attributes["data-number"].value;
+      projectM.addEventListener("click", (e) => {
         projectsNodeList.forEach((project) => {
           project.classList.remove("projectSelected");
         });
 
-        project.classList.add("projectSelected");
-        projectSelectedName.innerText = ` ${
-          //check that there is project in projects storage to fix error when there is none
-          ProjectsStorage.projects[project.dataset.number]
-            ? `Project: ${
-                ProjectsStorage.projects[project.dataset.number].title
-              }`
-            : "Select Project"
-        }`;
+        projectM.classList.add("projectSelected");
+
+        //check that there is project in projects storage... to fix error when there is none
+
+        if (cardkey) {
+          projectSelectedName.innerText = ` ${
+            JSON.parse(localStorage.getItem(`${cardkey}`)).title
+          }`;
+        } else {
+          projectSelectedName.innerText = "select a project";
+        }
       });
     });
   };
 
   //add number of projects
   const addProjectsNum = (projectsNum) => {
-    const projectCards = document.querySelectorAll(".projectCard");
     const projectNum = document.querySelector(".projectNum");
 
     switch (projectsNum) {
@@ -185,18 +199,12 @@ export default (function ProjectManipulation() {
   //sreach-bar functionality
   const searchBarFunciton = () => {
     const searchBar = document.getElementById("search");
-    // const projectsSearchedFor = ProjectsStorage.projects.filter((project) => {
-    //   return project.title
-    //     .toLowerCase()
-    //     .includes(searchBar.value.toLowerCase());
-    // });
+
     const allProjectCardsNodes = document.querySelectorAll(".projectCard");
     const allProjectTitles = document.querySelectorAll(".projectTitle");
     allProjectCardsNodes.forEach((node) => {
       node.style.display = "none";
-      console.log(node);
     });
-
     const projectsSearchedFor = [];
 
     allProjectTitles.forEach((node) => {
@@ -222,11 +230,28 @@ export default (function ProjectManipulation() {
 
   //Clear Finished Projects
   const clearFinishedProjects = () => {
-    const inPorgressProjects = ProjectsStorage.projects.filter((project) => {
-      return !project.done;
-    });
-    // empty projects storage and putting only the inPorgressProjects
-    ProjectsStorage.projects = [...inPorgressProjects];
+    // const inPorgressProjects = ProjectsStorage.projects.filter((project) => {
+    //   return !project.done;
+    // });
+    const inPorgressProjects = [];
+    // getting the inprograss projects
+    for (let i = 0; i < localStorage.length; i++) {
+      if (JSON.parse(localStorage.getItem(localStorage.key(i))).done == false) {
+        inPorgressProjects.push(
+          JSON.parse(localStorage.getItem(localStorage.key(i)))
+        );
+      }
+    }
+    //empty storage
+    // ProjectsStorage.projects = [...inPorgressProjects];
+    localStorage.clear();
+    // putting only the inPorgressProjects in storage
+    for (let i = 0; i < inPorgressProjects.length; i++) {
+      localStorage.setItem(
+        `${inPorgressProjects[i].projectKey}`,
+        JSON.stringify(inPorgressProjects[i])
+      );
+    }
 
     //update the projects Dislpay
     ProjectCardControl.updateUI();

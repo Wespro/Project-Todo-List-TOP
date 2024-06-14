@@ -2,11 +2,11 @@ import CreateProjectForm from "./createProjectFrom";
 import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
 import ProjectCardControl from "./projectCardControl";
-import ProjectsStorage from "./projectsStorage";
 import ModifyProjectFrom from "./modifyProjectFrom";
 import AddNotesForm from "./addNotesForm";
-import IntoTask from "./intoTask/intoTask.js";
-import projectsStorage from "./projectsStorage";
+import sidebarTabMobileControls from "./sidebar-tab-Mobile-controls";
+// imgs
+import more from "../img & icnons/icons/menu-outline.svg";
 
 export default function createProjectUI() {
   const intialProjectsPage = () => {
@@ -19,7 +19,15 @@ export default function createProjectUI() {
     const header = document.createElement("header");
     const headerTitle = document.createElement("h1");
 
+    const sideBarMainContainer = document.createElement("div");
+
     const sideBar = document.createElement("div");
+    const sideBarInnerContainer = document.createElement("div");
+
+    const openCloseSidebarContainer = document.createElement("div");
+    const openCloseSidebarBtn = document.createElement("button");
+    const openCloseSidebarPar = document.createElement("p");
+    const openCloseSidebarImg = document.createElement("img");
 
     const sideBarTitle = document.createElement("h1");
     const allProjects = document.createElement("button");
@@ -48,8 +56,15 @@ export default function createProjectUI() {
     //adding attrs
     homeInnerBody.classList.add("homeInnerBody");
     dimscreen.classList.add("dimLightScreen", "dimLightScreenOff");
+    sideBarMainContainer.classList.add("sideBarMainContainer");
 
-    sideBar.classList.add("sideBar");
+    sideBar.classList.add("sideBar", "closeSidebar");
+    sideBarInnerContainer.classList.add("sideBarInnerContainer");
+
+    openCloseSidebarContainer.classList.add("openCloseSidebarContainer");
+    openCloseSidebarBtn.classList.add("openCloseSidebarBtn");
+    openCloseSidebarPar.classList.add("openCloseSidebarPar");
+    openCloseSidebarImg.classList.add("openCloseSidebarImg");
 
     allProjects.classList.add("sidBarBtn", "allProjects");
     onGoingProjects.classList.add("sidBarBtn", "onGoingProjects");
@@ -73,6 +88,12 @@ export default function createProjectUI() {
 
     githubLink.setAttribute("href", "https://github.com/Wespro");
 
+    // imgs
+
+    openCloseSidebarImg.src = more;
+
+    //text
+    openCloseSidebarPar.innerText = "";
     headerTitle.innerText = "Projects";
     sideBarTitle.innerText = "Projects Control";
     allProjects.innerText = "All Projects";
@@ -90,9 +111,12 @@ export default function createProjectUI() {
 
     footer.innerHTML = `Copyright © 2023 `;
 
-    fragment.append(dimscreen, header, sideBar, main, footer);
+    fragment.append(dimscreen, header, sideBarMainContainer, footer);
     header.append(headerTitle);
-    sideBar.append(
+    sideBarMainContainer.append(sideBar, main);
+    sideBar.append(sideBarInnerContainer);
+    sideBarInnerContainer.append(
+      openCloseSidebarContainer,
       sideBarTitle,
       allProjects,
       onGoingProjects,
@@ -101,6 +125,9 @@ export default function createProjectUI() {
       medPriority,
       lowPriority
     );
+    openCloseSidebarContainer.append(openCloseSidebarBtn);
+    openCloseSidebarBtn.append(openCloseSidebarImg, openCloseSidebarPar);
+
     main.append(aboutProjects, projects);
 
     aboutProjects.append(
@@ -109,6 +136,7 @@ export default function createProjectUI() {
       projectNum,
       creatClearProjects
     );
+
     creatClearProjects.append(createProjectBtn, clearFinishedProjectsBtn);
     footer.append(githubLink);
 
@@ -175,10 +203,11 @@ export default function createProjectUI() {
     ProjectCardControl.projectDoneBtnsEventListener();
     ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectControlMain.addProjectsNum(allProjectCardsNodes.length);
-    ProjectCardControl.projectDoneBtnsEventListener();
+    ProjectCardControl.projectDoneSwitchWord("", "");
     ProjectCardControl.modifyProjectInfoBtnsEventListener();
     ProjectCardControl.AddNotesBtnsEventListener(e);
     ProjectCardControl.intoTasksBtnsEventListener(e);
+    sidebarTabMobileControls.sidebarBtnsCloseSidebar();
   });
   onGoingProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.onGoingProjectsDisplay();
@@ -187,40 +216,48 @@ export default function createProjectUI() {
     ProjectCardControl.modifyProjectInfoBtnsEventListener();
     ProjectCardControl.AddNotesBtnsEventListener(e);
     ProjectCardControl.intoTasksBtnsEventListener(e);
+    sidebarTabMobileControls.sidebarBtnsCloseSidebar();
   });
   finishedProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.finishedProjectsDisplay();
-    ProjectCardControl.projectDoneSwitchWord(undefined, "finish");
+    ProjectCardControl.projectDoneSwitchWord("", "finish");
     ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectCardControl.modifyProjectInfoBtnsEventListener();
     ProjectCardControl.AddNotesBtnsEventListener(e);
     ProjectCardControl.intoTasksBtnsEventListener(e);
+    sidebarTabMobileControls.sidebarBtnsCloseSidebar();
   });
 
   highPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.highPriortyProjectsDisplay();
     ProjectCardControl.projectPrioritySwitch("high");
+    ProjectCardControl.projectDoneSwitchWord("", "");
     ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectCardControl.modifyProjectInfoBtnsEventListener();
     ProjectCardControl.AddNotesBtnsEventListener(e);
     ProjectCardControl.intoTasksBtnsEventListener(e);
+    sidebarTabMobileControls.sidebarBtnsCloseSidebar();
   });
   medPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.medPriortyProjectsDisplay();
     ProjectCardControl.projectPrioritySwitch(undefined, "med");
+    ProjectCardControl.projectDoneSwitchWord("", "");
     ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectCardControl.modifyProjectInfoBtnsEventListener();
     ProjectCardControl.AddNotesBtnsEventListener(e);
     ProjectCardControl.intoTasksBtnsEventListener(e);
+    sidebarTabMobileControls.sidebarBtnsCloseSidebar();
   });
 
   lowPriortyProjects.addEventListener("click", (e) => {
     ProjectControlSideBar.lowPriortyProjectsDisplay();
     ProjectCardControl.projectPrioritySwitch(undefined, undefined, "low");
+    ProjectCardControl.projectDoneSwitchWord("", "");
     ProjectCardControl.deleteProjectBtnsEventListener();
     ProjectCardControl.modifyProjectInfoBtnsEventListener();
     ProjectCardControl.AddNotesBtnsEventListener(e);
     ProjectCardControl.intoTasksBtnsEventListener(e);
+    sidebarTabMobileControls.sidebarBtnsCloseSidebar();
   });
   //create Form Manipulation
 

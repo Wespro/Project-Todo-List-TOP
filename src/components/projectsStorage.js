@@ -1,22 +1,34 @@
 import ProjectMaker from "./projectMaker";
-import addNotesForm from "./addNotesForm";
 export default (function ProjectsStorage() {
-  const projects = [];
+  // const projects = [];
+  // localStorage.setItem("projects", JSON.stringify([]));
 
-  //default project
+  // const projects = [];
+  // JSON.parse(localStorage.getItem("projects"));
+
+  // default project
   const createTestProject = () => {
     const testProject = new ProjectMaker(
-      "Test",
+      "test",
       "2023/7/15",
       "High",
       "Lorem ipsum dolor sit amet consectetur adipisicing elit.Sint dolorum distinctio magni similique libero suscipit!",
       0
     );
-    testProject.onListTasks.push("testTask");
+    // testProject.notes.push("dsad");
+    // testProject.onListTasks.push("testTask");
+    // projects.push(testProject);
+    //  localStorage.clear();
+    //localStorage.setItem("test", JSON.stringify(testProject));
 
-    projects.push(testProject);
+    // console.log(localStorage);
+
+    // localStorage.setItem("projects", JSON.stringify([testProject]));
   };
 
   createTestProject();
-  return { projects, createTestProject };
+  return {
+    //projects,
+    createTestProject,
+  };
 })();

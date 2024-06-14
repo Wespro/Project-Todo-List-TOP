@@ -62,7 +62,7 @@ export default (function () {
   const openTaskForm = () => {
     const dimLightScreen = document.querySelector(".dimLightScreen");
     const AddTaskForm = document.querySelector("#AddTaskForm");
-    console.log(AddTaskForm);
+
     AddTaskForm.classList.remove("closeAddTaskForm");
     AddTaskForm.classList.add("openAddTaskForm");
     dimLightScreen.classList.add("dimLightScreenOn");
@@ -85,20 +85,28 @@ export default (function () {
   //     }
   //   });
   // };
-  const addTaskToStorage = (e, cardNumber) => {
+  const addTaskToStorage = (e, cardKey) => {
     if (!taskTextarea.value) {
       return;
     } else {
       e.preventDefault();
       //addding the new note to storage
-      ProjectsStorage.projects[cardNumber].onListTasks.push(taskTextarea.value);
+      JSON.parse(localStorage.getItem(cardKey)).onListTasks.push(
+        taskTextarea.value
+      );
+
+      const project = JSON.parse(localStorage.getItem(cardKey));
+
+      project.onListTasks.push(taskTextarea.value);
+
+      localStorage.setItem(`${cardKey}`, JSON.stringify(project));
     }
   };
-  const addTaskUI = (e, cardNumber) => {
+  const addTaskUI = (e, cardKey) => {
     if (!taskTextarea.value) {
       return;
     } else if (taskTextarea.value) {
-      IntoTask.displayProjectTasks(cardNumber);
+      IntoTask.displayProjectTasks(cardKey);
       //reset form
       taskTextarea.value = "";
     }

@@ -136,29 +136,88 @@ export default (function form() {
       !prioritySelect.value ||
       !descriptionTextArea.value
     ) {
+      if (!titleInput.value) {
+        titleInput.setCustomValidity("please fill out this field");
+      }
+
       return;
     } else {
-      e.preventDefault();
-      const newProject = new ProjectMaker(
-        titleInput.value,
-        dueDateInput.value,
-        prioritySelect.value,
-        descriptionTextArea.value,
-        ProjectsStorage.projects.length
-      );
+      //to create even if there isn't projects to loob the error on
+      if (localStorage.length === 0) {
+        e.preventDefault();
+        const newProject = new ProjectMaker(
+          titleInput.value,
+          dueDateInput.value,
+          prioritySelect.value,
+          descriptionTextArea.value,
+          // JSON.parse(localStorage.getItem("projects")).length
+          localStorage.length
+        );
 
-      //reset form
-      titleInput.value = "";
-      dueDateInput.value = "";
-      prioritySelect.value = "";
-      descriptionTextArea.value = "";
-      //close form
-      closeCreateForm();
-      //addding the newproject to storage
-      ProjectsStorage.projects.push(newProject);
-      projectCardControl.updateUI();
+        //addding the newproject to storage
+        // ProjectsStorage.projects.push(newProject);
+
+        localStorage.setItem(
+          `${newProject.projectKey}`,
+          JSON.stringify(newProject)
+        );
+
+        //reset form
+        titleInput.value = "";
+        dueDateInput.value = "";
+        prioritySelect.value = "";
+        descriptionTextArea.value = "";
+        //close form
+        closeCreateForm();
+
+        projectCardControl.updateUI();
+      } else {
+        //checking if user enterd similer title to the new project
+        for (let i = 0; i < localStorage.length; i++) {
+          if (
+            titleInput.value ===
+            JSON.parse(localStorage.getItem(localStorage.key(i))).title
+          ) {
+            titleInput.setCustomValidity(
+              "Can't use same name of exsiting project"
+            );
+          } else if (
+            titleInput.value &&
+            dueDateInput.value &&
+            prioritySelect.value &&
+            descriptionTextArea.value
+          ) {
+            //////////////////
+            e.preventDefault();
+            const newProject = new ProjectMaker(
+              titleInput.value,
+              dueDateInput.value,
+              prioritySelect.value,
+              descriptionTextArea.value
+              // JSON.parse(localStorage.getItem("projects")).length
+            );
+
+            //addding the newproject to storage
+            // ProjectsStorage.projects.push(newProject);
+
+            localStorage.setItem(
+              `${newProject.projectKey}`,
+              JSON.stringify(newProject)
+            );
+
+            //reset form
+            titleInput.value = "";
+            dueDateInput.value = "";
+            prioritySelect.value = "";
+            descriptionTextArea.value = "";
+            //close form
+            closeCreateForm();
+
+            projectCardControl.updateUI();
+          }
+        }
+      }
     }
   };
-
   return { theCreateForm, openCreateForm, closeCreateForm, createProject };
 })();

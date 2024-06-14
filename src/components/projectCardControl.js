@@ -3,7 +3,7 @@ import ProjectControlMain from "./projectControlMain";
 import ProjectControlSideBar from "./projectControlSideBar";
 import ModifyProjectFrom from "./modifyProjectFrom";
 import AddNotesForm from "./addNotesForm";
-// import AddTaskForm from "./intoTask/addTaskForm";
+
 import IntoTask from "./intoTask/intoTask";
 export default (function () {
   //private vars
@@ -14,29 +14,41 @@ export default (function () {
   let isLow1 = "";
   // project card vars
 
-  const projectDoneSwitchWord = (onGoing, finished) => {
+  const projectDoneSwitchWord = (onGoing = "", finished = "") => {
     onGoing1 = onGoing;
     finished1 = finished;
   };
 
-  const projectDone = (projectIndex) => {
-    const projectCards = document.querySelectorAll(".projectCard");
-
+  const projectDone = (e) => {
+    const nodeKey = e.target.attributes["data-number"].value;
+    const nodeElement = e.target.parentElement.parentElement;
     // Update UI
 
     if (
-      !ProjectsStorage.projects[projectIndex].done &&
-      !onGoing1 &&
-      !finished1
+      JSON.parse(localStorage.getItem(nodeKey)).done == false &&
+      onGoing1 === "" &&
+      finished1 === ""
     ) {
-      projectCards[projectIndex].classList.add("finishedProject");
-      ProjectsStorage.projects[projectIndex].done = true;
-    } else if (!ProjectsStorage.projects[projectIndex].done && onGoing1) {
-      projectCards[projectIndex].classList.add("finishedProject");
-      projectCards[projectIndex].style.display = "none";
-      ProjectsStorage.projects[projectIndex].done = true;
+      nodeElement.classList.add("finishedProject");
+      const project = JSON.parse(localStorage.getItem(nodeKey));
 
-      onGoing1 = "";
+      project.done = true;
+
+      localStorage.setItem(`${nodeKey}`, JSON.stringify(project));
+    } else if (
+      JSON.parse(localStorage.getItem(nodeKey)).done == false &&
+      onGoing1 !== "" &&
+      finished1 === ""
+    ) {
+      nodeElement.classList.add("finishedProject");
+      nodeElement.style.display = "none";
+
+      //  ProjectsStorage.projects[projectIndex].done = true;
+      const project = JSON.parse(localStorage.getItem(nodeKey));
+
+      project.done = true;
+
+      localStorage.setItem(`${nodeKey}`, JSON.stringify(project));
 
       //update project num
       const allProjectCardsNodes = document.querySelectorAll(".projectCard");
@@ -49,12 +61,20 @@ export default (function () {
           : "return";
       });
       ProjectControlMain.addProjectsNum(onGoingProjectCards.length);
-    } else if (ProjectsStorage.projects[projectIndex].done && finished1) {
-      projectCards[projectIndex].classList.remove("finishedProject");
+    } else if (
+      JSON.parse(localStorage.getItem(nodeKey)).done == true &&
+      finished1 !== "" &&
+      onGoing1 === ""
+    ) {
+      nodeElement.classList.remove("finishedProject");
 
-      projectCards[projectIndex].style.display = "none";
-      ProjectsStorage.projects[projectIndex].done = false;
-      finished1 = "";
+      nodeElement.style.display = "none";
+      const project = JSON.parse(localStorage.getItem(nodeKey));
+
+      project.done = false;
+
+      localStorage.setItem(`${nodeKey}`, JSON.stringify(project));
+
       const allProjectCardsNodes = document.querySelectorAll(".projectCard");
       const finishedProjectCards = [];
       allProjectCardsNodes.forEach((node) => {
@@ -63,20 +83,27 @@ export default (function () {
           : "return";
       });
       ProjectControlMain.addProjectsNum(finishedProjectCards.length);
-    } else {
-      projectCards[projectIndex].classList.remove("finishedProject");
-      ProjectsStorage.projects[projectIndex].done = false;
+    } else if (
+      JSON.parse(localStorage.getItem(nodeKey)).done == true &&
+      onGoing1 === "" &&
+      finished1 === ""
+    ) {
+      nodeElement.classList.remove("finishedProject");
+      const project = JSON.parse(localStorage.getItem(nodeKey));
+
+      project.done = false;
+
+      localStorage.setItem(`${nodeKey}`, JSON.stringify(project));
     }
   };
 
-  const projectDoneBtnsEventListener = (onGoing, finish) => {
+  const projectDoneBtnsEventListener = () => {
     const projectDoneBtns = document.querySelectorAll(".projectDone");
     projectDoneBtns.forEach((btn) => {
       btn.addEventListener("click", function (e) {
-        projectDone(btn.dataset.number, onGoing, finish);
+        projectDone(e);
       });
     });
-    ProjectControlMain.projectHighlight();
   };
 
   const projectPrioritySwitch = (isHigh, isMed, isLow) => {
@@ -85,52 +112,46 @@ export default (function () {
     isLow1 = isLow;
   };
 
-  const deleteProject = (projectIndex, projectsType) => {
-    ProjectsStorage.projects.forEach((storgeProject, index) => {
-      if (Number(projectIndex) === index) {
-        delete ProjectsStorage.projects[projectIndex];
+  const deleteProject = (e) => {
+    const nodeKey = e.target.attributes["data-number"].value;
 
-        //removing the empty cell in the storge
-        for (let i = 0; i <= ProjectsStorage.projects.length; i++) {
-          if (ProjectsStorage.projects[i] == null) {
-            ProjectsStorage.projects.splice(i, 1);
-          }
-        }
-
-        // update the projects Dislpay
-        if (onGoing1) {
-          ProjectControlMain.addProjects();
-          ProjectControlSideBar.onGoingProjectsDisplay();
-        } else if (finished1) {
-          ProjectControlMain.addProjects();
-          ProjectControlSideBar.finishedProjectsDisplay();
-        } else if (isHigh1) {
-          ProjectControlMain.addProjects();
-          ProjectControlSideBar.highPriortyProjectsDisplay();
-        } else if (isMed1) {
-          ProjectControlMain.addProjects();
-          ProjectControlSideBar.medPriortyProjectsDisplay();
-        } else if (isLow1) {
-          ProjectControlMain.addProjects();
-          ProjectControlSideBar.lowPriortyProjectsDisplay();
-        } else {
-          ProjectControlMain.addProjects();
-          ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
-        }
+    for (let i = 0; i < localStorage.length; i++) {
+      if (
+        nodeKey ===
+        JSON.parse(localStorage.getItem(localStorage.key(i))).projectKey
+      ) {
+        localStorage.removeItem(`${nodeKey}`);
       }
-    });
+    }
+    // update the projects Dislpay
+    if (onGoing1) {
+      updateUI();
+      ProjectControlSideBar.onGoingProjectsDisplay();
+    } else if (finished1) {
+      updateUI();
+      ProjectControlSideBar.finishedProjectsDisplay();
+    } else if (isHigh1) {
+      updateUI();
+      ProjectControlSideBar.highPriortyProjectsDisplay();
+    } else if (isMed1) {
+      updateUI();
+      ProjectControlSideBar.medPriortyProjectsDisplay();
+    } else if (isLow1) {
+      updateUI();
+      ProjectControlSideBar.lowPriortyProjectsDisplay();
+    } else {
+      updateUI();
+    }
   };
 
-  const deleteProjectBtnsEventListener = (projectsType) => {
+  const deleteProjectBtnsEventListener = () => {
     const deleteProjectBtns = document.querySelectorAll(".delete");
 
     deleteProjectBtns.forEach((btn) => {
       btn.addEventListener("click", function (e) {
-        deleteProject(btn.dataset.number, projectsType);
-        deleteProjectBtnsEventListener(projectsType);
+        deleteProject(e);
       });
     });
-    ProjectControlMain.projectHighlight();
   };
   ////////////////////////
 
@@ -160,34 +181,26 @@ export default (function () {
         });
       });
     });
-
-    ProjectControlMain.projectHighlight();
   };
 
   const deleteNoteStorage = (e) => {
     const projectCardUI =
       e.target.parentElement.parentElement.parentElement.parentElement;
     const noteProjectCardUI = e.target.parentElement;
-
-    ProjectsStorage.projects.forEach((project) => {
-      // console.log(
-      //   Number(projectCardUI.attributes["data-number"].value),
-      //   project.projectKey
-      // );
+    for (let i = 0; i < localStorage.length; i++) {
+      const project = JSON.parse(localStorage.getItem(localStorage.key(i)));
       if (
-        Number(projectCardUI.attributes["data-number"].value) ===
-        project.projectKey
+        projectCardUI.attributes["data-number"].value === project.projectKey
       ) {
         project.notes.splice(
           Number(noteProjectCardUI.attributes["data-number"].value),
           1
         );
-        // delete project.notes[
-        //   Number(noteProjectCardUI.attributes["data-number"].value)
-        // ];
+        localStorage.setItem(`${project.projectKey}`, JSON.stringify(project));
+
         updateUI(e);
       }
-    });
+    }
   };
 
   const AddNotesBtnsEventListener = (e) => {
@@ -225,8 +238,6 @@ export default (function () {
         deleteNoteStorage(e);
       });
     });
-
-    // ProjectControlMain.projectHighlight();
   };
 
   //into tasks
@@ -242,8 +253,8 @@ export default (function () {
 
   const updateUI = (e) => {
     ProjectControlMain.addProjects();
-    ProjectControlMain.projectHighlight();
-    ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
+    ProjectControlMain.projectHighlight(e);
+    ProjectControlMain.addProjectsNum(localStorage.length);
     projectDoneBtnsEventListener(e);
     deleteProjectBtnsEventListener(e);
     modifyProjectInfoBtnsEventListener();
@@ -264,3 +275,18 @@ export default (function () {
     updateUI,
   };
 })();
+
+// function feb(n) {
+//   if (n < 2) {
+//     return n;
+//   } else {
+//     return feb(n - 1) + feb(n - 2);
+//   }
+// }
+
+// function printResult(n) {
+//   for (let i = 0; i <= n; i++) {
+//     console.log(feb(i));
+//   }
+// }
+// printResult(5);

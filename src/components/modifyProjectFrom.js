@@ -7,6 +7,7 @@ import ProjectMaker from "./projectMaker";
 import ProjectsStorage from "./projectsStorage";
 import ProjectControlMain from "./projectControlMain";
 import ProjectCardControl from "./projectCardControl";
+import projectCardControl from "./projectCardControl";
 
 export default (function form() {
   const fragment = new DocumentFragment();
@@ -40,7 +41,7 @@ export default (function form() {
   const modifySubmitbtn = document.createElement("button");
 
   //methouds
-  const theModifyForm = (btnNum) => {
+  const theModifyForm = () => {
     //assign attributes
     modifyForm.setAttribute("id", "modifyForm");
     modifyForm.classList.add("closeModifyForm");
@@ -143,27 +144,41 @@ export default (function form() {
 
   const assignOldData = (e, btn) => {
     //the project that would be modified data assign
-    ProjectsStorage.projects.forEach((project) => {
-      if (project.projectKey === Number(btn.attributes["data-number"].value)) {
-        modifyTitleInput.value = project.title;
-        modifyDueDateInput.value = project.dueDate;
-        modifyPrioritySelect.value = project.priority;
-        modifyDescriptionTextArea.value = project.description;
+    for (let i = 0; i < localStorage.length; i++) {
+      if (
+        JSON.parse(localStorage.getItem(localStorage.key(i))).title ===
+        btn.classList[1]
+      ) {
+        const oldDataProj = JSON.parse(
+          localStorage.getItem(localStorage.key(i))
+        );
+        console.log(btn.classList[1], "assignOldData");
+        modifyTitleInput.value = oldDataProj.title;
+        modifyDueDateInput.value = oldDataProj.dueDate;
+        modifyPrioritySelect.value = oldDataProj.priority;
+        modifyDescriptionTextArea.value = oldDataProj.description;
       }
-    });
+    }
   };
   const projectModifyIsclicked = (e, state) => {
-    const btnNum = Number(e.target.attributes["data-number"].value);
-    ProjectsStorage.projects.forEach((project) => {
-      if (project.projectKey === btnNum) {
-        project.openToBeModified = state;
+    const nodeKey = e.target.attributes["data-number"].value;
+    for (let i = 0; i < localStorage.length; i++) {
+      if (
+        JSON.parse(localStorage.getItem(localStorage.key(i))).projectKey ===
+        nodeKey
+      ) {
+        const modifiedProject = JSON.parse(
+          localStorage.getItem(localStorage.key(i))
+        );
+        modifiedProject.openToBeModified = true;
+
+        //updating localStorage
+        localStorage.setItem(
+          `${modifiedProject.projectKey}`,
+          JSON.stringify(modifiedProject)
+        );
       }
-    });
-  };
-  const projectModifyNotclicked = (state) => {
-    ProjectsStorage.projects.forEach((project) => {
-      project.openToBeModified = false;
-    });
+    }
   };
 
   const modifyProjectStorage = (e) => {
@@ -176,16 +191,34 @@ export default (function form() {
       return;
     } else {
       e.preventDefault();
-      ProjectsStorage.projects.forEach((project) => {
-        if (project.openToBeModified === true) {
-          project.title = modifyTitleInput.value;
-          project.dueDate = modifyDueDateInput.value;
-          project.priority = modifyPrioritySelect.value;
-          project.description = modifyDescriptionTextArea.value;
+      for (let i = 0; i < localStorage.length; i++) {
+        if (
+          JSON.parse(localStorage.getItem(localStorage.key(i)))
+            .openToBeModified === true
+        ) {
+          const modifiedPRoject = JSON.parse(
+            localStorage.getItem(localStorage.key(i))
+          );
+          modifiedPRoject.title = modifyTitleInput.value;
+          modifiedPRoject.dueDate = modifyDueDateInput.value;
+          modifiedPRoject.priority = modifyPrioritySelect.value;
+          modifiedPRoject.description = modifyDescriptionTextArea.value;
+          //reset switch
+          modifiedPRoject.openToBeModified = false;
+          //updating localStorage
+          localStorage.setItem(
+            `${modifiedPRoject.projectKey}`,
+            JSON.stringify(modifiedPRoject)
+          );
+          projectCardControl.updateUI();
         }
-      });
+      }
+
+      // localStorage.setItem(
+      //   "projects",
+      //   JSON.stringify(ProjectsStorage.projects)
+      // );
     }
-    projectModifyNotclicked(false);
   };
 
   const modifyProjectUI = (e, btnNum) => {
@@ -199,12 +232,7 @@ export default (function form() {
     } else {
       e.preventDefault();
 
-      ProjectControlMain.addProjects();
-      ProjectControlMain.projectHighlight();
-      ProjectControlMain.addProjectsNum(ProjectsStorage.projects.length);
-      ProjectCardControl.projectDoneBtnsEventListener();
-      ProjectCardControl.deleteProjectBtnsEventListener();
-      ProjectCardControl.modifyProjectInfoBtnsEventListener();
+      projectCardControl.updateUI();
     }
     //close form
     closeModifyForm();

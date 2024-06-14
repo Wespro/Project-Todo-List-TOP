@@ -8,9 +8,10 @@ export default (function () {
     const moveToInprogressBtns = document.querySelectorAll(".moveToInProgress");
 
     moveToInprogressBtns.forEach((btn) => {
-      console.log();
-      let cardNumber =
+      let cardKey =
         btn.parentElement.parentElement.attributes["maincardnumber"].value;
+
+      const project = JSON.parse(localStorage.getItem(cardKey));
 
       btn.addEventListener("click", function (e) {
         if (
@@ -22,19 +23,17 @@ export default (function () {
             "onListTasksContainer"
           )
         ) {
-          ProjectsStorage.projects[cardNumber].inProgressTasks.push(
+          project.inProgressTasks.push(
             btn.parentElement.parentElement.children[0].textContent
           );
 
           let taskCardNum =
             btn.parentElement.parentElement.attributes["data-number"];
 
-          ProjectsStorage.projects[cardNumber].onListTasks.splice(
-            taskCardNum - 1,
-            1
-          );
+          project.onListTasks.splice(taskCardNum - 1, 1);
 
-          IntoTask.displayProjectTasks(cardNumber);
+          localStorage.setItem(`${cardKey}`, JSON.stringify(project));
+          IntoTask.displayProjectTasks(cardKey);
         }
       });
     });
@@ -45,8 +44,10 @@ export default (function () {
     const moveToInprogressBtns = document.querySelectorAll(".moveToInProgress");
 
     moveToInprogressBtns.forEach((btn) => {
-      let cardNumber =
+      let cardKey =
         btn.parentElement.parentElement.attributes["maincardnumber"].value;
+
+      const project = JSON.parse(localStorage.getItem(cardKey));
 
       btn.addEventListener("click", function (e) {
         if (
@@ -58,19 +59,18 @@ export default (function () {
             "doneTasksContainer"
           )
         ) {
-          ProjectsStorage.projects[cardNumber].inProgressTasks.push(
+          project.inProgressTasks.push(
             btn.parentElement.parentElement.children[0].textContent
           );
 
           let taskCardNum =
             btn.parentElement.parentElement.attributes["data-number"];
 
-          ProjectsStorage.projects[cardNumber].doneTasks.splice(
-            taskCardNum - 1,
-            1
-          );
+          project.doneTasks.splice(taskCardNum - 1, 1);
 
-          IntoTask.displayProjectTasks(cardNumber);
+          localStorage.setItem(`${cardKey}`, JSON.stringify(project));
+
+          IntoTask.displayProjectTasks(cardKey);
         }
       });
     });
@@ -81,8 +81,10 @@ export default (function () {
     const moveToOnListBtns = document.querySelectorAll(".moveToOnlist");
 
     moveToOnListBtns.forEach((btn) => {
-      let cardNumber =
+      let cardKey =
         btn.parentElement.parentElement.attributes["maincardnumber"].value;
+
+      const project = JSON.parse(localStorage.getItem(cardKey));
 
       btn.addEventListener("click", function (e) {
         if (
@@ -91,19 +93,18 @@ export default (function () {
             btn.parentElement.parentElement.attributes["data-number"].value
           )
         ) {
-          ProjectsStorage.projects[cardNumber].onListTasks.push(
+          project.onListTasks.push(
             btn.parentElement.parentElement.children[0].textContent
           );
 
           let taskCardNum =
             btn.parentElement.parentElement.attributes["data-number"];
 
-          ProjectsStorage.projects[cardNumber].inProgressTasks.splice(
-            taskCardNum - 1,
-            1
-          );
+          project.inProgressTasks.splice(taskCardNum - 1, 1);
 
-          IntoTask.displayProjectTasks(cardNumber);
+          localStorage.setItem(`${cardKey}`, JSON.stringify(project));
+
+          IntoTask.displayProjectTasks(cardKey);
         }
       });
     });
@@ -114,9 +115,10 @@ export default (function () {
     const moveToDoneBtns = document.querySelectorAll(".moveToDone");
 
     moveToDoneBtns.forEach((btn) => {
-      let cardNumber =
+      let cardKey =
         btn.parentElement.parentElement.attributes["maincardnumber"].value;
 
+      const project = JSON.parse(localStorage.getItem(cardKey));
       btn.addEventListener("click", function (e) {
         if (
           Number(btn.attributes["data-number"].value) ===
@@ -124,19 +126,18 @@ export default (function () {
             btn.parentElement.parentElement.attributes["data-number"].value
           )
         ) {
-          ProjectsStorage.projects[cardNumber].doneTasks.push(
+          project.doneTasks.push(
             btn.parentElement.parentElement.children[0].textContent
           );
 
           let taskCardNum =
             btn.parentElement.parentElement.attributes["data-number"];
 
-          ProjectsStorage.projects[cardNumber].inProgressTasks.splice(
-            taskCardNum - 1,
-            1
-          );
+          project.inProgressTasks.splice(taskCardNum - 1, 1);
 
-          IntoTask.displayProjectTasks(cardNumber);
+          localStorage.setItem(`${cardKey}`, JSON.stringify(project));
+
+          IntoTask.displayProjectTasks(cardKey);
         }
       });
     });
@@ -147,11 +148,12 @@ export default (function () {
     const deleteTaskBtns = document.querySelectorAll(".deleteTask");
 
     deleteTaskBtns.forEach((btn) => {
-      let cardNumber =
-        btn.parentElement.parentElement.attributes["maincardnumber"].value;
-
       let containerNode = btn.parentElement.parentElement.parentElement;
 
+      let cardKey =
+        btn.parentElement.parentElement.attributes["maincardnumber"].value;
+
+      const project = JSON.parse(localStorage.getItem(cardKey));
       btn.addEventListener("click", function (e) {
         if (
           Number(btn.attributes["data-number"].value) ===
@@ -163,25 +165,17 @@ export default (function () {
             btn.parentElement.parentElement.attributes["data-number"];
 
           if (containerNode.classList.contains("onListTasksContainer")) {
-            ProjectsStorage.projects[cardNumber].onListTasks.splice(
-              taskCardNum - 1,
-              1
-            );
+            project.onListTasks.splice(taskCardNum - 1, 1);
           } else if (
             containerNode.classList.contains("inprogressTasksContainer")
           ) {
-            ProjectsStorage.projects[cardNumber].inProgressTasks.splice(
-              taskCardNum - 1,
-              1
-            );
+            project.inProgressTasks.splice(taskCardNum - 1, 1);
           } else if (containerNode.classList.contains("doneTasksContainer")) {
-            ProjectsStorage.projects[cardNumber].doneTasks.splice(
-              taskCardNum - 1,
-              1
-            );
+            project.doneTasks.splice(taskCardNum - 1, 1);
           }
         }
-        IntoTask.displayProjectTasks(cardNumber);
+        localStorage.setItem(`${cardKey}`, JSON.stringify(project));
+        IntoTask.displayProjectTasks(cardKey);
       });
     });
   };

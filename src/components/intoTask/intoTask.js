@@ -3,8 +3,9 @@ import createProjectUI from "../projectMakerUI";
 import ProjectsStorage from "../projectsStorage";
 import AddTaskForm from "./addTaskForm";
 import TaskCardBtnsFunc from "./taskCardBtnsFunc";
+import sidebarTabMobileControls from "../sidebar-tab-Mobile-controls";
 export default (function () {
-  const displayProjectTasks = (cardNumber) => {
+  const displayProjectTasks = (cardKey) => {
     const body = document.querySelector("body");
     body.replaceChildren();
     const fragment = new DocumentFragment();
@@ -58,14 +59,14 @@ export default (function () {
 
     //adding text
     // (h)s
-    projectTitle.innerText = ProjectsStorage.projects[cardNumber].title;
+    projectTitle.innerText = JSON.parse(localStorage.getItem(cardKey)).title;
     onListTasksTitle.innerText = "OnList";
     inprogressTasksTitle.innerText = "Inprogress";
     doneTasksTitle.innerText = "Done";
     // btns;
     addTaskCard.innerText = "Add Task +";
 
-    backToHome.innerText = " ⇦ Back To Home";
+    backToHome.innerText = " ⇦ Back ";
 
     //appending
 
@@ -77,7 +78,13 @@ export default (function () {
     doneTasks.append(doneTasksTitle, doneTasksContainer);
 
     //onlist tasks
-    ProjectsStorage.projects[cardNumber].onListTasks.forEach((task, index) => {
+    for (
+      let i = 0;
+      i < JSON.parse(localStorage.getItem(cardKey)).onListTasks.length;
+      i++
+    ) {
+      const task = JSON.parse(localStorage.getItem(cardKey)).onListTasks[i];
+
       const taskCard = document.createElement("div");
       const taskTitle = document.createElement("h3");
       const taskActions = document.createElement("div");
@@ -87,17 +94,15 @@ export default (function () {
 
       taskCard.classList.add("taskCard");
       taskCard.classList.add("taskCard", "taskCardShown");
-      taskCard.setAttribute("data-number", `${index}`);
-      taskCard.setAttribute("maincardnumber", `${cardNumber}`);
+      taskCard.setAttribute("data-number", `${i}`);
+      taskCard.setAttribute("maincardnumber", `${cardKey}`);
       taskTitle.classList.add("taskTitle");
       taskActions.classList.add("taskActions");
 
       moveToInProgress.classList.add("moveToInProgress");
-      moveToInProgress.setAttribute("data-number", `${index}`);
-      // moveToDone.classList.add("moveToDone");
-      // moveToDone.setAttribute("data-number", `${index}`);
+      moveToInProgress.setAttribute("data-number", `${i}`);
       deleteTask.classList.add("deleteTask");
-      deleteTask.setAttribute("data-number", `${index}`);
+      deleteTask.setAttribute("data-number", `${i}`);
 
       taskTitle.innerText = task;
 
@@ -110,47 +115,58 @@ export default (function () {
       taskCard.append(taskTitle, taskActions);
 
       onListTasksContainer.append(taskCard);
-    });
+    }
 
     //inProgress tasks
-    ProjectsStorage.projects[cardNumber].inProgressTasks.forEach(
-      (task, index) => {
-        const taskCard = document.createElement("div");
-        const taskTitle = document.createElement("h3");
-        const taskActions = document.createElement("div");
-        const moveToOnlist = document.createElement("button");
-        const moveToDone = document.createElement("button");
-        const deleteTask = document.createElement("button");
 
-        taskCard.classList.add("taskCard");
-        taskCard.setAttribute("data-number", `${index}`);
-        taskCard.setAttribute("maincardnumber", `${cardNumber}`);
-        taskTitle.classList.add("taskTitle");
-        taskActions.classList.add("taskActions");
+    for (
+      let i = 0;
+      i < JSON.parse(localStorage.getItem(cardKey)).inProgressTasks.length;
+      i++
+    ) {
+      const task = JSON.parse(localStorage.getItem(cardKey)).inProgressTasks[i];
 
-        moveToOnlist.classList.add("moveToOnlist");
-        moveToOnlist.setAttribute("data-number", `${index}`);
-        moveToDone.classList.add("moveToDone");
-        moveToDone.setAttribute("data-number", `${index}`);
-        deleteTask.classList.add("deleteTask");
-        deleteTask.setAttribute("data-number", `${index}`);
+      const taskCard = document.createElement("div");
+      const taskTitle = document.createElement("h3");
+      const taskActions = document.createElement("div");
+      const moveToOnlist = document.createElement("button");
+      const moveToDone = document.createElement("button");
+      const deleteTask = document.createElement("button");
 
-        taskTitle.innerText = task;
+      taskCard.classList.add("taskCard");
+      taskCard.setAttribute("data-number", `${i}`);
+      taskCard.setAttribute("maincardnumber", `${cardKey}`);
+      taskTitle.classList.add("taskTitle");
+      taskActions.classList.add("taskActions");
 
-        //btns
-        moveToOnlist.innerText = "Move To Onlist";
-        moveToDone.innerText = " Move To Done ✔";
-        deleteTask.innerText = " Delete Task x";
+      moveToOnlist.classList.add("moveToOnlist");
+      moveToOnlist.setAttribute("data-number", `${i}`);
+      moveToDone.classList.add("moveToDone");
+      moveToDone.setAttribute("data-number", `${i}`);
+      deleteTask.classList.add("deleteTask");
+      deleteTask.setAttribute("data-number", `${i}`);
 
-        taskActions.append(moveToOnlist, moveToDone, deleteTask);
-        taskCard.append(taskTitle, taskActions);
+      taskTitle.innerText = task;
 
-        inprogressTasksContainer.append(taskCard);
-      }
-    );
+      //btns
+      moveToOnlist.innerText = "Move To Onlist";
+      moveToDone.innerText = " Move To Done ✔";
+      deleteTask.innerText = " Delete Task x";
+
+      taskActions.append(moveToOnlist, moveToDone, deleteTask);
+      taskCard.append(taskTitle, taskActions);
+
+      inprogressTasksContainer.append(taskCard);
+    }
 
     //done Tasks cards
-    ProjectsStorage.projects[cardNumber].doneTasks.forEach((task, index) => {
+    for (
+      let i = 0;
+      i < JSON.parse(localStorage.getItem(cardKey)).doneTasks.length;
+      i++
+    ) {
+      const task = JSON.parse(localStorage.getItem(cardKey)).doneTasks[i];
+
       const taskCard = document.createElement("div");
       const taskTitle = document.createElement("h3");
       const taskActions = document.createElement("div");
@@ -159,16 +175,16 @@ export default (function () {
       const deleteTask = document.createElement("button");
 
       taskCard.classList.add("taskCard", "taskCardShown");
-      taskCard.setAttribute("data-number", `${index}`);
-      taskCard.setAttribute("maincardnumber", `${cardNumber}`);
+      taskCard.setAttribute("data-number", `${i}`);
+      taskCard.setAttribute("maincardnumber", `${cardKey}`);
       taskTitle.classList.add("taskTitle");
       taskActions.classList.add("taskActions");
       // moveToOnlist.classList.add("moveToOnlist");
       // moveToOnlist.setAttribute("data-number", `${index}`);
       moveToInProgress.classList.add("moveToInProgress");
-      moveToInProgress.setAttribute("data-number", `${index}`);
+      moveToInProgress.setAttribute("data-number", `${i}`);
       deleteTask.classList.add("deleteTask");
-      deleteTask.setAttribute("data-number", `${index}`);
+      deleteTask.setAttribute("data-number", `${i}`);
 
       taskTitle.innerText = task;
 
@@ -181,9 +197,9 @@ export default (function () {
       taskCard.append(taskTitle, taskActions);
 
       doneTasksContainer.append(taskCard);
-    });
+    }
 
-    bodyInnerContainer.append(projectTitle, tasksContainer, backToHome);
+    bodyInnerContainer.append(backToHome, projectTitle, tasksContainer);
     fragment.append(bodyInnerContainer);
     body.append(dimscreen, fragment);
 
@@ -192,7 +208,7 @@ export default (function () {
     backToHomeFunc();
     AddTaskbtnfunc();
     closeFormFunc();
-    submitFormBtnfunc(cardNumber);
+    submitFormBtnfunc(cardKey);
     TaskCardBtnsFunc.moveToInprogressFromOnListFunc();
     TaskCardBtnsFunc.moveToInprogressFromDoneFunc();
     TaskCardBtnsFunc.moveToOnListFunc();
@@ -209,6 +225,7 @@ export default (function () {
 
     backToHomeBtn.addEventListener("click", function (e) {
       createProjectUI();
+      sidebarTabMobileControls.closeSidebar();
     });
   };
 
@@ -233,11 +250,11 @@ export default (function () {
   };
 
   // submitFormbtn fuctionality
-  const submitFormBtnfunc = (cardNumber) => {
+  const submitFormBtnfunc = (cardKey) => {
     const submitFormBtn = document.querySelector("#addTaskSubmitBtn");
     submitFormBtn.addEventListener("click", function (e) {
-      AddTaskForm.addTaskToStorage(e, cardNumber);
-      AddTaskForm.addTaskUI(e, cardNumber);
+      AddTaskForm.addTaskToStorage(e, cardKey);
+      AddTaskForm.addTaskUI(e, cardKey);
       AddTaskForm.closeTaskForm();
     });
   };

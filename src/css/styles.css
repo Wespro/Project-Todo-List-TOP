@@ -6,6 +6,7 @@
 a {
   color: white;
 }
+
 button {
   border: none;
   padding: 0.8rem 1.5rem;
@@ -17,21 +18,23 @@ button:hover {
   filter: brightness(1.2);
 }
 body {
-  position: relative;
   width: 100%;
-  height: 100%;
+  max-height: 100%;
 }
 .homeInnerBody {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: #d9f0ff;
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  grid-template-rows: auto 6fr;
+  display: flex;
+  flex-direction: column;
+
+  /* display: grid; */
+  /* grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr 6fr;
   grid-template-areas:
     "sidebar header"
     "sidebar main"
-    "sidebar footer";
+    "sidebar footer"; */
 }
 
 .dimLightScreenOn {
@@ -54,21 +57,29 @@ header {
   text-align: center;
   padding: 2rem;
   grid-area: header;
-  border-bottom-right-radius: 14px;
-  border-bottom-left-radius: 14px;
-
   box-shadow: 4px 3px 5px black;
   color: white;
 }
+.sideBarMainContainer {
+  display: flex;
+  position: relative;
+  height: 100%;
+}
 /* sidebar */
 .sideBar {
-  width: 20vw;
-  padding: 10% 15%;
-  height: 100vh;
+  min-width: 20%;
+  padding: 2rem 2rem 2rem;
   text-align: center;
   background-color: #e6af2e;
   grid-area: sidebar;
   box-shadow: 1px 2px 20px black;
+  position: absolute;
+  transition: all 300ms ease-in;
+  height: 100%;
+  z-index: 1;
+}
+.sideBarInnerContainer {
+  padding: 2rem 0;
   display: grid;
   align-content: start;
   align-items: center;
@@ -76,11 +87,39 @@ header {
   position: sticky;
   top: 0;
 }
+
+.openCloseSidebarContainer {
+  position: absolute;
+  top: -32px;
+  right: -95px;
+  height: 100%;
+}
+.openCloseSidebarBtn {
+  position: sticky;
+  top: 0;
+  width: 4rem;
+  border-radius: 2%;
+  background-color: #e6af2e;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.5rem;
+  color: #d9f0ff;
+}
+.openCloseSidebarImg {
+  width: 100%;
+}
+.closeSidebar {
+  transform: translate(-100%);
+  box-shadow: none;
+}
 .sideBar h1 {
   margin-bottom: 3rem;
 }
 .sideBar .sidBarBtn {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bolder;
   padding: 10% 0;
 }
 .onGoingProjects {
@@ -95,26 +134,33 @@ header {
 
 /* main */
 main {
+  flex-grow: 1;
+  min-height: 100vh;
   grid-area: main;
   padding: 3%;
   overflow: scroll;
 }
 .aboutProjects {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: space-between;
-  padding: 1rem 0 5rem;
+  padding: 3rem 0 5rem;
   align-items: center;
 }
 .projectSelectedName {
   width: max-content;
+  font-size: 2rem;
 }
 .aboutProjects #search {
   padding: 0.8rem 2rem;
   width: 25rem;
   border-radius: 30px;
   border: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
+}
+.projectNum {
+  font-size: 1.5rem;
 }
 .aboutProjects #search:focus {
   border: none;
@@ -123,14 +169,18 @@ main {
 .creatClearProjects {
   display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .creatClearProjects .createProjectBtn {
   background-color: #e6af2e;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: bolder;
 }
 .creatClearProjects .clearFinishedProjectsBtn {
   background-color: #d7263d;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: bolder;
 }
 .projects {
   display: grid;
@@ -143,6 +193,8 @@ main {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+
   gap: 1.5rem;
 }
 
@@ -151,17 +203,26 @@ main {
 }
 .finishedProject {
   opacity: 0.5;
+
   cursor: not-allowed;
 }
 
 .projectInfo {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.projectInfo .projectTitle {
+  font-size: 1.6rem;
 }
 .projectInfo .projectDescription {
   width: 30vw;
   word-break: break-all;
+}
+.projectInfo .projectPriority {
+  font-size: 1.3rem;
 }
 
 /* Notes */
@@ -185,7 +246,7 @@ main {
 }
 
 .note {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .deletenoteBtn {
   padding: 0.6rem 1rem;
@@ -197,21 +258,26 @@ main {
 }
 
 .optionBtns {
+  padding: 0 2rem;
   display: flex;
   gap: 2rem;
-  align-self: end;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .optionBtns .modify {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
   background-color: rgb(168, 191, 216);
 }
 .optionBtns .addNotes {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
   background-color: rgb(86, 161, 241);
 }
 .optionBtns .intoTasks {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 
   background-color: #2c3035;
   color: white;
@@ -223,12 +289,14 @@ main {
   color: black;
 }
 .optionBtns .projectDone {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
   background-color: rgb(63, 192, 82);
 }
 
 .optionBtns .delete {
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
   background-color: #d7263d;
 }
 .High {
@@ -251,4 +319,205 @@ footer {
   border-top-right-radius: 14px;
   border-top-left-radius: 14px;
   box-shadow: 1px 2px 20px black;
+}
+
+@media only screen and (max-width: 1300px) {
+  header {
+    padding: 1.2rem;
+  }
+  .sideBarMainContainer {
+    display: flex;
+    position: relative;
+    height: 100%;
+  }
+  /* sidebar */
+  .sideBar {
+    min-width: 10%;
+    padding: 1rem 2rem 2rem;
+    text-align: center;
+    background-color: #e6af2e;
+    grid-area: sidebar;
+    box-shadow: 1px 2px 20px black;
+    position: absolute;
+    transition: all 300ms ease-in;
+    height: 100%;
+  }
+  .sideBarInnerContainer {
+    display: grid;
+    align-content: start;
+    align-items: center;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+  }
+
+  .openCloseSidebarContainer {
+    position: absolute;
+    top: -16px;
+    right: -80px;
+    height: 100%;
+  }
+  .openCloseSidebarBtn {
+    position: sticky;
+    top: 0;
+    width: 3rem;
+    font-size: 1rem;
+  }
+  .openCloseSidebarImg {
+    width: 100%;
+  }
+  .closeSidebar {
+    transform: translate(-100%);
+    box-shadow: none;
+  }
+  .sideBar h1 {
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+  }
+  .sideBar .sidBarBtn {
+    font-size: 0.7rem;
+    padding: 5% 0;
+    flex-grow: 0;
+  }
+  .onGoingProjects {
+    background-color: rgb(69, 209, 90);
+  }
+  .finishedProjects {
+    background-color: #d7263d;
+  }
+  .activeSidebarBtn {
+    border: 3px solid;
+  }
+
+  /* main */
+  main {
+    min-height: 100vh;
+    padding: 3%;
+  }
+  .aboutProjects {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    padding: 3rem 0;
+    align-items: center;
+  }
+  .projectSelectedName {
+    width: auto;
+    font-size: 1.2rem;
+    white-space: nowrap;
+  }
+  .aboutProjects #search {
+    padding: 0.8rem 1.5rem;
+    width: 15rem;
+    font-size: 0.7rem;
+  }
+  .projectNum {
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .creatClearProjects .createProjectBtn {
+    font-size: 0.78rem;
+    width: 7rem;
+  }
+  .creatClearProjects .clearFinishedProjectsBtn {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.78rem;
+    width: 7rem;
+  }
+
+  .projectCard {
+    color: black;
+    padding: 1.5rem 2rem;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .projectSelected {
+    border: 2px solid black;
+  }
+  .finishedProject {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .projectInfo {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .projectInfo .projectTitle {
+    font-size: 1.3rem;
+  }
+  .projectInfo .projectDescription {
+    width: 50vw;
+    word-break: break-all;
+    font-size: 0.8rem;
+  }
+  .projectInfo .projectPriority {
+    width: 6rem;
+
+    font-size: 0.9rem;
+  }
+  .projectInfo .projectDueDate {
+    width: 8rem;
+
+    font-size: 0.9rem;
+  }
+
+  /* Notes */
+  .notes ul {
+    margin: 1rem 0.5rem 5rem;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .notes h2 {
+    font-size: 1.2rem;
+  }
+  .noteContainerProjectCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5rem;
+    width: 100%;
+  }
+  .notelable {
+    font-size: 1.5rem;
+  }
+
+  .note {
+    font-size: 0.9rem;
+    word-break: break-all;
+  }
+  .deletenoteBtn {
+    padding: 0.6rem 1rem;
+    background-color: rgb(241, 83, 83);
+  }
+
+  .optionBtns .delete,
+  .optionBtns .projectDone,
+  .optionBtns .intoTasks,
+  .optionBtns .addNotes,
+  .optionBtns .modify {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  footer {
+    background-color: #313b72;
+    grid-area: footer;
+    color: #d9f0ff;
+    font-size: 1rem;
+    padding: 1.5%;
+    text-align: center;
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
+    box-shadow: 1px 2px 20px black;
+  }
 }

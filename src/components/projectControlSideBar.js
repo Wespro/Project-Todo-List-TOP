@@ -1,6 +1,5 @@
 import ProjectControlMain from "./projectControlMain";
-import ProjectsStorage from "./projectsStorage";
-import ProjectCardControl from "./projectCardControl";
+
 export default (function () {
   //  Finished projects
   const finishedProjectsDisplay = () => {
@@ -56,7 +55,6 @@ export default (function () {
         ? onGoingProjectCards.push(node)
         : "return";
     });
-    console.log(onGoingProjectCards);
 
     onGoingProjectCards.forEach((node) => {
       node.style.display = "flex";
